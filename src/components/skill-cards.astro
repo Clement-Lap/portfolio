@@ -1,0 +1,30 @@
+---
+import { Image } from "astro:assets";
+import SkillImages from "../scripts/skill-card-imports";
+import type { ISkillImage } from "../scripts/interfaces/skill-image.interface";
+
+interface Props {
+    title: string;
+    description: string;
+    images: ISkillImage[];
+}
+
+const { title, description, images } = Astro.props;
+---
+
+<div class="skill-card">
+    <h3 class="highlighted">{title}</h3>
+    <p>{description}</p>
+    <div class="skill-card--images"></div>
+    {
+        images.map((img) => (
+            <Image
+                src={img.import}
+                class={`${img.highlight ? "language-logo highlighted-logo" : "language-logo"}`}
+                width={96}
+                height={96}
+                alt={img.alt}
+            />
+        ))
+    }
+</div>

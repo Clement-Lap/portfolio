@@ -1,0 +1,30 @@
+---
+import HeaderParts from "./footer-parts.astro";
+---
+
+<footer>
+    <HeaderParts title="Copyrights">
+        <p>
+            &COPY; 2026 LAPORTE Clément.<br />All rights reserved.
+        </p>
+    </HeaderParts>
+    <HeaderParts title="Website">
+        <p>All the websites, design, and code by me. NO AI.</p>
+    </HeaderParts>
+    <HeaderParts title="External content">
+        <p>Time API : get Paris (UTC+1) time.</p>
+    </HeaderParts>
+    <HeaderParts title="Links">
+        <a href="https://www.github.com/Clement-Lap">Github</a>
+        <a href="https://www.linkedin.com/clement-lap">Linkedin</a>
+    </HeaderParts>
+</footer>
+
+<style scoped>
+    footer {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        padding: 12.5% 2em;
+        gap: 3em;
+    }
+</style>

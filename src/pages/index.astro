@@ -1,17 +1,132 @@
 ---
-
+import Layout from "../layouts/layout.astro";
+import Caroussel from "../components/caroussel.astro";
+import SkillCards from "../components/skill-cards.astro";
+import SkillImages from "../scripts/skill-card-imports";
+import TimelineElement from "../components/timeline-element.astro";
+import ContactForm from "../components/contact-form.astro";
+import ElementPlacement from "../scripts/timeline-element.enum";
 ---
 
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="icon" href="/favicon.ico" />
-        <meta name="viewport" content="width=device-width" />
-        <meta name="generator" content={Astro.generator} />
-        <title>Astro</title>
-    </head>
-    <body>
-        <h1>Astro</h1>
-    </body>
-</html>
+<Layout lang="en" title="home">
+    <section id="landing">
+        <div id="landing-text">
+            <div id="landing-text__name">
+                <h1>I'm <span class="highlighted">Clément Laporte</span>.</h1>
+            </div>
+            <div id="landing-text__context">
+                <h2>
+                    A <span class="bold underlined">France</span> based developer &
+                    <span class="bold underlined">student</span>
+                    <br />
+                    Specialized in <span class="bold">web</span> and <span class="bold">software</span> development.
+                </h2>
+            </div>
+        </div>
+        <Caroussel />
+    </section>
+    <section class="my-skills">
+        <SkillCards
+            title="Front-end"
+            description="The stack I mainly use in the process for the front-end part of websites, including frameworks, preprocessors and libraries."
+            images={[
+                SkillImages.html,
+                SkillImages.css,
+                SkillImages.jsts,
+                SkillImages.vuejs,
+                SkillImages.angular,
+                SkillImages.astro,
+                SkillImages.gsap,
+                SkillImages.vite,
+                SkillImages.react,
+                SkillImages.pcss,
+                SkillImages.svelt,
+            ]}
+        />
+        <SkillCards
+            title="Back-end"
+            description="The technology I work with for my projects requiring a backend. I usually develop REST API, but also sometimes service worker or microservices."
+            images={[
+                SkillImages.node,
+                SkillImages.nest,
+                SkillImages.python,
+                SkillImages.cSharp,
+                SkillImages.go,
+                SkillImages.springboot,
+            ]}
+        />
+        <SkillCards
+            title="Software"
+            description="My go-to programming languages and API to develop (mainly desktop) applications."
+            images={[
+                SkillImages.qt,
+                SkillImages.gtk,
+                SkillImages.rust,
+                SkillImages.cpp,
+                SkillImages.c,
+                SkillImages.electron,
+                SkillImages.cSharp,
+            ]}
+        />
+        <SkillCards
+            title="Tools"
+            description="Tools I use in the process in my projects. I have a wide range of abilities in them. While not being an expert, I can use them efficiently."
+            images={[
+                SkillImages.arch,
+                SkillImages.windows,
+                SkillImages.zed,
+                SkillImages.jetbrains,
+                SkillImages.github,
+                SkillImages.figma,
+                SkillImages.blender,
+            ]}
+        />
+    </section>
+    <section class="timeline">
+        <TimelineElement
+            arrowAfter={true}
+            title="2026 - Present"
+            description={[
+                "Learn Go, Zig, Assembly.",
+                "Improve Rust & Rest API knowledge.",
+                "Create my own taskbar for Hyprland.",
+                "Contribute to open source projects.",
+            ]}
+            placement={ElementPlacement.left}
+        />
+        <TimelineElement
+            arrowAfter={true}
+            title="2025"
+            description={[
+                "Implement the Game of Life in C.",
+                "Enroll in Electrical Engineering and Computer Science university course.",
+                "Created the pong game in Javascript using canva.",
+                "Learn Rust",
+            ]}
+            placement={ElementPlacement.right}
+        />
+        <TimelineElement
+            arrowAfter={true}
+            title="2024"
+            description={[
+                "Created a C++ library to make CLIs.",
+                "Wrote an unfinished book on Python.",
+                "Created small temporary websites.",
+            ]}
+            placement={ElementPlacement.left}
+        />
+        <TimelineElement
+            arrowAfter={false}
+            title="Past"
+            description={[
+                "Learned Python, Javascript, CSS and HTML.",
+                "Created a website for the discord bot in VueJS.",
+                "Created a moderation discord bot, which I abandoned after it reached 100 servers.",
+            ]}
+            placement={ElementPlacement.right}
+        />
+    </section>
+    <section id="contact-me">
+        <ContactForm />
+    </section>
+</Layout>

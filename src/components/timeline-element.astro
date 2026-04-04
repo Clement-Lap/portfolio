@@ -1,0 +1,30 @@
+---
+import { Image } from "astro:assets";
+import ArrowImage from "../images/other/arrow.svg";
+import ElementPlacement from "../scripts/timeline-element.enum.ts";
+
+interface Props {
+    arrowAfter: boolean;
+    placement: ElementPlacement;
+    title: string;
+    description: string[];
+}
+
+const { arrowAfter, title, description, placement } = Astro.props;
+---
+
+<div class="timeline">
+    <h3 class="highlighted">{title}</h3>
+    <ul>
+        {description.map((element: string) => <li>{element}</li>)}
+    </ul>
+    {
+        arrowAfter ? (
+            <Image
+                src={ArrowImage}
+                alt="Arrow image"
+                style={placement == ElementPlacement.left ? "transform: scale(1, 1);" : "transform: scale(1, -1);"}
+            />
+        ) : null
+    }
+</div>

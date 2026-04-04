@@ -1,5 +1,28 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig, fontProviders } from "astro/config";
 
 // https://astro.build/config
-export default defineConfig({});
+export default defineConfig({
+  fonts: [
+    {
+      provider: fontProviders.fontsource(),
+      name: "Kufam",
+      cssVariable: "--font-kufam",
+      fallbacks: ["sans-serif"],
+      weights: [600, 700],
+    },
+    {
+      provider: fontProviders.fontsource(),
+      name: "Lexend",
+      cssVariable: "--font-lexend",
+      fallbacks: ["sans-serif"],
+      weights: [400, 500],
+    },
+    {
+      provider: fontProviders.fontsource(),
+      name: "Akaya Telivigala",
+      cssVariable: "--font-akaya",
+      fallbacks: ["serif"],
+    },
+  ],
+});

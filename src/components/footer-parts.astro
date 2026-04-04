@@ -1,0 +1,30 @@
+---
+interface Props {
+    title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<div class="header__element">
+    <div class="header__element--title">
+        <h6 class="bold">{title}</h6>
+    </div>
+    <div class="header__element--content">
+        <slot />
+    </div>
+</div>
+
+<style>
+    .header__element {
+        align-items: start;
+        text-align: start;
+        gap: 1em;
+    }
+
+    .header__element,
+    .header__element--content {
+        display: flex;
+        flex-direction: column;
+    }
+</style>

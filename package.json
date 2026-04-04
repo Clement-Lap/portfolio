@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "Portfolio",
   "type": "module",
   "version": "0.0.1",
   "engines": {
@@ -8,10 +8,17 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "test": "vitest",
+    "test e2e": "",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^6.0.7"
+    "@csstools/postcss-relative-color-syntax": "^4.0.2",
+    "astro": "6.1.3",
+    "autoprefixer": "^10.4.27",
+    "cssnano": "^7.1.3",
+    "postcss-uncss": "^0.17.0",
+    "vitest": "^4.1.2"
   }
 }
