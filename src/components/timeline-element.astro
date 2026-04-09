@@ -1,16 +1,12 @@
 ---
-import { Image } from "astro:assets";
-import ArrowImage from "../images/other/arrow.svg";
 import ElementPlacement from "../scripts/timeline-element.enum.ts";
 
 interface Props {
-    arrowAfter: boolean;
-    placement: ElementPlacement;
     title: string;
     description: string[];
 }
 
-const { arrowAfter, title, description, placement } = Astro.props;
+const { title, description } = Astro.props;
 ---
 
 <div class="timeline">
@@ -18,13 +14,19 @@ const { arrowAfter, title, description, placement } = Astro.props;
     <ul>
         {description.map((element: string) => <li>{element}</li>)}
     </ul>
-    {
-        arrowAfter ? (
-            <Image
-                src={ArrowImage}
-                alt="Arrow image"
-                style={placement == ElementPlacement.left ? "transform: scale(1, 1);" : "transform: scale(1, -1);"}
-            />
-        ) : null
-    }
 </div>
+
+<style>
+    .timeline {
+        max-width: min(40vw, 400px);
+    }
+
+    .timeline:nth-of-type(even) {
+        align-self: flex-end;
+    }
+
+    img {
+        margin: auto;
+        padding: 10px auto;
+    }
+</style>

@@ -5,8 +5,8 @@ tool := "bun"
 # tool := "npm"
 
 # run dev server
-dev:
-    {{ tool }} run dev
+dev host="":
+    {{ tool }} run dev {{ if host == "host" { "--host" } else { "" } }}
 
 # run vitest
 test:

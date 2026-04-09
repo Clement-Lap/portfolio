@@ -1,30 +1,109 @@
 ---
 import { Image } from "astro:assets";
 import SkillImages from "../scripts/skill-card-imports";
-import type { ISkillImage } from "../scripts/interfaces/skill-image.interface";
+import type { ISkillImage } from "../scripts/skill-image.interface";
 
-interface Props {
+export interface Props {
     title: string;
     description: string;
     images: ISkillImage[];
+    direction: Direction;
 }
 
-const { title, description, images } = Astro.props;
+export enum Direction {
+    vertical = "vertical",
+    horizontal = "horizontal",
+}
+
+const { title, description, images, direction = "vertical" } = Astro.props;
 ---
 
-<div class="skill-card">
-    <h3 class="highlighted">{title}</h3>
-    <p>{description}</p>
-    <div class="skill-card--images"></div>
-    {
-        images.map((img) => (
-            <Image
-                src={img.import}
-                class={`${img.highlight ? "language-logo highlighted-logo" : "language-logo"}`}
-                width={96}
-                height={96}
-                alt={img.alt}
-            />
-        ))
-    }
+<div class={`skill-card ${direction}`}>
+    <div class="skill-card__text">
+        <h3 class="highlighted">{title}</h3>
+        <p>{description}</p>
+    </div>
+    <div class="skill-card__images">
+        {
+            images.map((img) => (
+                <Image
+                    src={img.import}
+                    class={`${img.highlight ? "language-logo highlighted-logo" : "language-logo"}`}
+                    width={128}
+                    height={128}
+                    alt={img.alt}
+                />
+            ))
+        }
+    </div>
 </div>
+
+<style scoped>
+    .skill-card:nth-child(1) {
+        grid-area: frontend;
+    }
+
+    .skill-card:nth-child(2) {
+        grid-area: backend;
+    }
+
+    .skill-card:nth-child(3) {
+        grid-area: software;
+    }
+
+    .skill-card:nth-child(4) {
+        grid-area: tools;
+    }
+
+    .skill-card {
+        display: grid;
+        padding: 16px;
+        gap: 20px;
+        border: 1px solid var(--accent-clr);
+        border-radius: 16px;
+        height: fit-content;
+    }
+
+    .horizontal {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .vertical {
+        grid-template-columns: 1fr;
+    }
+
+    .skill-card__text {
+        grid-template-rows: 1fr 2fr;
+    }
+
+    .skill-card__text > h3,
+    .skill-card__text > p {
+        padding: 0;
+        margin: 0;
+    }
+
+    .skill-card__images {
+        display: grid;
+        height: fit-content;
+        gap: 6px;
+    }
+
+    .vertical > .skill-card__images {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .horizontal > .skill-card__images {
+        grid-template-columns: repeat(5, 1fr);
+    }
+
+    .skill-card__images > img {
+        padding: 6px;
+        width: min(100%, 64px);
+        height: auto;
+        border-radius: 12px;
+    }
+
+    .highlighted-logo {
+        background-color: var(--accent-clr);
+    }
+</style>

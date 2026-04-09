@@ -1,11 +1,13 @@
 ---
 import Layout from "../layouts/layout.astro";
 import Caroussel from "../components/caroussel.astro";
-import SkillCards from "../components/skill-cards.astro";
+import SkillCards, { Direction } from "../components/skill-cards.astro";
 import SkillImages from "../scripts/skill-card-imports";
 import TimelineElement from "../components/timeline-element.astro";
 import ContactForm from "../components/contact-form.astro";
-import ElementPlacement from "../scripts/timeline-element.enum";
+import ScrollDownArrowImage from "../images/other/scroll-down-arrow.svg";
+import TimelineArrow, { ArrowDirection } from "../images/other/arrow.astro";
+import { Image } from "astro:assets";
 ---
 
 <Layout lang="en" title="home">
@@ -17,7 +19,7 @@ import ElementPlacement from "../scripts/timeline-element.enum";
             <div id="landing-text__context">
                 <h2>
                     A <span class="bold underlined">France</span> based developer &
-                    <span class="bold underlined">student</span>
+                    <span class="bold underlined">student</span>,
                     <br />
                     Specialized in <span class="bold">web</span> and <span class="bold">software</span> development.
                 </h2>
@@ -25,66 +27,78 @@ import ElementPlacement from "../scripts/timeline-element.enum";
         </div>
         <Caroussel />
     </section>
-    <section class="my-skills">
-        <SkillCards
-            title="Front-end"
-            description="The stack I mainly use in the process for the front-end part of websites, including frameworks, preprocessors and libraries."
-            images={[
-                SkillImages.html,
-                SkillImages.css,
-                SkillImages.jsts,
-                SkillImages.vuejs,
-                SkillImages.angular,
-                SkillImages.astro,
-                SkillImages.gsap,
-                SkillImages.vite,
-                SkillImages.react,
-                SkillImages.pcss,
-                SkillImages.svelt,
-            ]}
-        />
-        <SkillCards
-            title="Back-end"
-            description="The technology I work with for my projects requiring a backend. I usually develop REST API, but also sometimes service worker or microservices."
-            images={[
-                SkillImages.node,
-                SkillImages.nest,
-                SkillImages.python,
-                SkillImages.cSharp,
-                SkillImages.go,
-                SkillImages.springboot,
-            ]}
-        />
-        <SkillCards
-            title="Software"
-            description="My go-to programming languages and API to develop (mainly desktop) applications."
-            images={[
-                SkillImages.qt,
-                SkillImages.gtk,
-                SkillImages.rust,
-                SkillImages.cpp,
-                SkillImages.c,
-                SkillImages.electron,
-                SkillImages.cSharp,
-            ]}
-        />
-        <SkillCards
-            title="Tools"
-            description="Tools I use in the process in my projects. I have a wide range of abilities in them. While not being an expert, I can use them efficiently."
-            images={[
-                SkillImages.arch,
-                SkillImages.windows,
-                SkillImages.zed,
-                SkillImages.jetbrains,
-                SkillImages.github,
-                SkillImages.figma,
-                SkillImages.blender,
-            ]}
-        />
+    <section id="scroll-down">
+        <Image src={ScrollDownArrowImage} alt="An arrow" />
     </section>
-    <section class="timeline">
+    <section id="my-skills">
+        <div id="my-skills__text">
+            <h1>My <span class="highlighted">tech stack</span></h1>
+        </div>
+        <div id="my-skills__cards">
+            <SkillCards
+                title="Front-end"
+                description="The stack I mainly use in the process for the front-end part of websites, including frameworks, preprocessors and libraries."
+                images={[
+                    SkillImages.html,
+                    SkillImages.css,
+                    SkillImages.jsts,
+                    SkillImages.vuejs,
+                    SkillImages.angular,
+                    SkillImages.astro,
+                    SkillImages.gsap,
+                    SkillImages.vite,
+                    SkillImages.react,
+                    SkillImages.pcss,
+                    SkillImages.svelt,
+                ]}
+                direction={Direction.vertical}
+            />
+            <SkillCards
+                title="Back-end"
+                description="The technology I work with for my projects requiring a backend. I usually develop REST API, but also sometimes service worker or microservices."
+                images={[
+                    SkillImages.node,
+                    SkillImages.nest,
+                    SkillImages.python,
+                    SkillImages.cSharp,
+                    SkillImages.go,
+                    SkillImages.springboot,
+                ]}
+                direction={Direction.vertical}
+            />
+            <SkillCards
+                title="Software"
+                description="My go-to programming languages and API to develop (mainly desktop) applications or firmware."
+                images={[
+                    SkillImages.qt,
+                    SkillImages.gtk,
+                    SkillImages.rust,
+                    SkillImages.cpp,
+                    SkillImages.c,
+                    SkillImages.electron,
+                    SkillImages.cSharp,
+                ]}
+                direction={Direction.vertical}
+            />
+            <SkillCards
+                title="Tools"
+                description="Tools I use in the process in my projects. I have a wide range of abilities in them. While not being an expert, I can use them efficiently."
+                images={[
+                    SkillImages.arch,
+                    SkillImages.windows,
+                    SkillImages.zed,
+                    SkillImages.jetbrains,
+                    SkillImages.github,
+                    SkillImages.figma,
+                    SkillImages.blender,
+                ]}
+                direction={Direction.horizontal}
+            />
+        </div>
+    </section>
+    <section id="timeline">
+        <h1>My <span class="highlighted">timeline</span></h1>
         <TimelineElement
-            arrowAfter={true}
             title="2026 - Present"
             description={[
                 "Learn Go, Zig, Assembly.",
@@ -92,10 +106,9 @@ import ElementPlacement from "../scripts/timeline-element.enum";
                 "Create my own taskbar for Hyprland.",
                 "Contribute to open source projects.",
             ]}
-            placement={ElementPlacement.left}
         />
+        <TimelineArrow direction={ArrowDirection.LeftToRight} />
         <TimelineElement
-            arrowAfter={true}
             title="2025"
             description={[
                 "Implement the Game of Life in C.",
@@ -103,30 +116,65 @@ import ElementPlacement from "../scripts/timeline-element.enum";
                 "Created the pong game in Javascript using canva.",
                 "Learn Rust",
             ]}
-            placement={ElementPlacement.right}
         />
+        <TimelineArrow direction={ArrowDirection.RightToLeft} />
         <TimelineElement
-            arrowAfter={true}
             title="2024"
             description={[
                 "Created a C++ library to make CLIs.",
                 "Wrote an unfinished book on Python.",
                 "Created small temporary websites.",
             ]}
-            placement={ElementPlacement.left}
         />
+        <TimelineArrow direction={ArrowDirection.LeftToRight} />
         <TimelineElement
-            arrowAfter={false}
+            }
             title="Past"
             description={[
                 "Learned Python, Javascript, CSS and HTML.",
                 "Created a website for the discord bot in VueJS.",
                 "Created a moderation discord bot, which I abandoned after it reached 100 servers.",
             ]}
-            placement={ElementPlacement.right}
         />
     </section>
     <section id="contact-me">
         <ContactForm />
     </section>
 </Layout>
+
+<style>
+    section:not(#landing) {
+        padding: 40px 20% !important;
+    }
+
+    #landing {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        min-height: 85vh;
+        align-items: center;
+    }
+
+    #scroll-down {
+        display: flex;
+    }
+
+    #scroll-down > img {
+        width: 64px;
+        margin: auto;
+    }
+
+    #my-skills > #my-skills__cards {
+        display: grid;
+        gap: 22px;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-areas:
+            "frontend backend software"
+            "tools tools .";
+    }
+
+    #timeline {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+</style>
