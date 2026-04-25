@@ -8,12 +8,13 @@ import GloriousCat from "../images/clem/glorious-cat.png";
 ---
 
 <div id="carousel">
-    <Image src={AngryClem} id="img-1" alt="Little me, angry me." draggable="false" />
-    <Image src={ClemNCat} id="img-2" alt="Me holding a long cat." draggable="false" />
-    <Image src={DumbCat} id="img-3" alt="My dumb cat." draggable="false" />
-    <Image src={EvilCat} id="img-4" alt="My evil cat." draggable="false" />
-    <Image src={GloriousCat} id="img-5" alt="She looks like Batman." draggable="false" />
+    <Image src={AngryClem} id="img-1" alt="Little me, angry me." draggable="false" width={400} />
+    <Image src={ClemNCat} id="img-2" alt="Me holding a long cat." draggable="false" width={400} />
+    <Image src={DumbCat} id="img-3" alt="My dumb cat." draggable="false" width={400} />
+    <Image src={EvilCat} id="img-4" alt="My evil cat." draggable="false" width={400} />
+    <Image src={GloriousCat} id="img-5" alt="She looks like Batman." draggable="false" width={400} />
     <button id="rewind">Rewind</button>
+    <p id="img-content"></p>
 </div>
 
 <script>
@@ -21,10 +22,19 @@ import GloriousCat from "../images/clem/glorious-cat.png";
 
     const caroussel = document.getElementById("carousel")!;
     const button = document.getElementById("rewind")!;
+    const imgContent = document.getElementById("img-content")!;
 
     const animationTime = 0.5;
     const animationDelay = 0;
     const deltaTreshold = 300;
+
+    const phrases = [
+        'I was at the beach with my family doing a "sandball" fight, when my brother hid a rock inside the ball (it hurt).',
+        "Me and my former cat, Helis (Norwegian Forest cat breed).",
+        "My other cat, called Gazor-pazor-field, a reference to Rick and Morty (he's very fat and dumb).",
+        'My current cat, called Plume (French for "feather") because she is tiny and lightweight.',
+        "She likes to go on my window to fight the crime in her city (watch for birds in the garden)",
+    ];
 
     let currentImg = 5;
     let isDragged = false;
@@ -42,9 +52,11 @@ import GloriousCat from "../images/clem/glorious-cat.png";
         }
 
         currentImg = 5;
+        imgContent.innerHTML = phrases[4];
     }
 
     function init() {
+        imgContent.innerHTML = phrases[4];
         for (let i = 1; i <= 5; i++) {
             document.getElementById(`img-${i}`)!.style.zIndex = (i + 1).toString();
         }
@@ -83,6 +95,7 @@ import GloriousCat from "../images/clem/glorious-cat.png";
                 },
             });
             currentImg--;
+            imgContent.innerHTML = phrases[currentImg - 1] || "";
         }
 
         if (currentImg < 1) currentImg = 1;
@@ -136,13 +149,16 @@ import GloriousCat from "../images/clem/glorious-cat.png";
         width: 100%;
         height: 100%;
         transform-origin: 0% 0%;
+        display: flex;
+        flex-direction: column;
     }
 
     div > img {
         user-select: none;
         pointer-events: none;
-        width: 380px;
+        width: 340px;
         height: auto;
+        border-radius: calc(var(--border-radius) * 4);
     }
 
     div > * {
@@ -157,5 +173,11 @@ import GloriousCat from "../images/clem/glorious-cat.png";
         padding: 2ch 4ch;
         border-radius: var(--border-radius);
         border: none;
+    }
+
+    p {
+        top: 100% !important;
+        font-family: var(--font-akaya);
+        user-select: none;
     }
 </style>
