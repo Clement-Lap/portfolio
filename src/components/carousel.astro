@@ -1,0 +1,161 @@
+---
+import { Image } from "astro:assets";
+import AngryClem from "../images/clem/angry-clem.png";
+import ClemNCat from "../images/clem/clem-n-cat.png";
+import DumbCat from "../images/clem/dumb-cat.png";
+import EvilCat from "../images/clem/evil-cat.png";
+import GloriousCat from "../images/clem/glorious-cat.png";
+---
+
+<div id="carousel">
+    <Image src={AngryClem} id="img-1" alt="Little me, angry me." draggable="false" />
+    <Image src={ClemNCat} id="img-2" alt="Me holding a long cat." draggable="false" />
+    <Image src={DumbCat} id="img-3" alt="My dumb cat." draggable="false" />
+    <Image src={EvilCat} id="img-4" alt="My evil cat." draggable="false" />
+    <Image src={GloriousCat} id="img-5" alt="She looks like Batman." draggable="false" />
+    <button id="rewind">Rewind</button>
+</div>
+
+<script>
+    import { gsap } from "gsap";
+
+    const caroussel = document.getElementById("carousel")!;
+    const button = document.getElementById("rewind")!;
+
+    const animationTime = 0.5;
+    const animationDelay = 0;
+    const deltaTreshold = 300;
+
+    let currentImg = 5;
+    let isDragged = false;
+    let defaultX = 0;
+    let defaultY = 0;
+
+    function reload() {
+        for (let i = 1; i <= 5; i++) {
+            gsap.to(`#img-${i}`, {
+                x: 0,
+                y: 0,
+                opacity: 1,
+                delay: 0.3 * i,
+            });
+        }
+
+        currentImg = 5;
+    }
+
+    function init() {
+        for (let i = 1; i <= 5; i++) {
+            document.getElementById(`img-${i}`)!.style.zIndex = (i + 1).toString();
+        }
+    }
+
+    button.onclick = () => reload();
+
+    function cleanup() {
+        isDragged = false;
+        gsap.to(`#img-${currentImg}`, {
+            x: 0,
+            y: 0,
+        });
+        document.removeEventListener("mousemove", move);
+        caroussel.removeEventListener("mousedown", select);
+    }
+
+    function move(event: MouseEvent) {
+        if (!isDragged) return;
+        event.preventDefault();
+        const newX = event.pageX - defaultX;
+        const newY = event.pageY - defaultY;
+        const delta = Math.abs(newX) + Math.abs(newY);
+        gsap.to(`#img-${currentImg}`, {
+            x: newX,
+            y: newY,
+        });
+
+        if (delta > deltaTreshold) {
+            isDragged = false;
+            gsap.to(`#img-${currentImg}`, {
+                opacity: 0,
+                duration: 0.3,
+                onComplete: () => {
+                    document.getElementById(`#img-${currentImg}`)?.remove();
+                },
+            });
+            currentImg--;
+        }
+
+        if (currentImg < 1) currentImg = 1;
+        if (currentImg > 5) currentImg = 5; // should never happen
+    }
+
+    function select(event: MouseEvent) {
+        defaultX = event.pageX;
+        defaultY = event.pageY;
+        isDragged = true;
+    }
+
+    document.addEventListener("mousemove", (event: MouseEvent) => move(event));
+    caroussel.addEventListener("mousedown", (event: MouseEvent) => select(event));
+    document.addEventListener("mouseup", () => cleanup());
+
+    gsap.to("#img-1", {
+        x: 5,
+        y: -2,
+        rotate: 6,
+        delay: animationDelay,
+        duration: animationTime,
+    });
+    gsap.to("#img-2", {
+        x: -5,
+        rotate: -12,
+        delay: animationDelay,
+        duration: animationTime,
+    });
+    gsap.to("#img-3", {
+        x: 2,
+        y: 2,
+        rotate: 9,
+        delay: animationDelay,
+        duration: animationTime,
+    });
+    gsap.to("#img-5", {
+        x: 1,
+        y: -2,
+        rotate: 3,
+        delay: animationDelay,
+        duration: animationTime,
+    });
+
+    init();
+</script>
+
+<style>
+    #carousel {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transform-origin: 0% 0%;
+    }
+
+    div > img {
+        user-select: none;
+        pointer-events: none;
+        width: 380px;
+        height: auto;
+    }
+
+    div > * {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    button {
+        z-index: 1;
+        padding: 2ch 4ch;
+        border-radius: var(--border-radius);
+        border: none;
+    }
+</style>

@@ -1,12 +1,12 @@
 ---
 import Layout from "../layouts/layout.astro";
-import Caroussel from "../components/caroussel.astro";
+import Carousel from "../components/carousel.astro";
 import SkillCards, { Direction } from "../components/skill-cards.astro";
 import SkillImages from "../scripts/skill-card-imports";
 import TimelineElement from "../components/timeline-element.astro";
 import ContactForm from "../components/contact-form.astro";
 import ScrollDownArrowImage from "../images/other/scroll-down-arrow.svg";
-import TimelineArrow, { ArrowDirection } from "../images/other/arrow.astro";
+import Tree from "../images/other/tree.astro";
 import { Image } from "astro:assets";
 ---
 
@@ -25,10 +25,10 @@ import { Image } from "astro:assets";
                 </h2>
             </div>
         </div>
-        <Caroussel />
+        <Carousel />
     </section>
     <section id="scroll-down">
-        <Image src={ScrollDownArrowImage} alt="An arrow" />
+        <Image id="scroll-down__image" src={ScrollDownArrowImage} alt="An arrow" />
     </section>
     <section id="my-skills">
         <div id="my-skills__text">
@@ -97,50 +97,65 @@ import { Image } from "astro:assets";
         </div>
     </section>
     <section id="timeline">
-        <h1>My <span class="highlighted">timeline</span></h1>
-        <TimelineElement
-            title="2026 - Present"
-            description={[
-                "Learn Go, Zig, Assembly.",
-                "Improve Rust & Rest API knowledge.",
-                "Create my own taskbar for Hyprland.",
-                "Contribute to open source projects.",
-            ]}
-        />
-        <TimelineArrow direction={ArrowDirection.LeftToRight} />
-        <TimelineElement
-            title="2025"
-            description={[
-                "Implement the Game of Life in C.",
-                "Enroll in Electrical Engineering and Computer Science university course.",
-                "Created the pong game in Javascript using canva.",
-                "Learn Rust",
-            ]}
-        />
-        <TimelineArrow direction={ArrowDirection.RightToLeft} />
-        <TimelineElement
-            title="2024"
-            description={[
-                "Created a C++ library to make CLIs.",
-                "Wrote an unfinished book on Python.",
-                "Created small temporary websites.",
-            ]}
-        />
-        <TimelineArrow direction={ArrowDirection.LeftToRight} />
-        <TimelineElement
-            }
-            title="Past"
-            description={[
-                "Learned Python, Javascript, CSS and HTML.",
-                "Created a website for the discord bot in VueJS.",
-                "Created a moderation discord bot, which I abandoned after it reached 100 servers.",
-            ]}
-        />
+        <div id="timeline__title">
+            <h1>My <span class="highlighted">timeline</span></h1>
+        </div>
+        <div id="timeline__timeline-elements">
+            <Tree />
+            <TimelineElement
+                title="2026 - Present"
+                description={[
+                    "Learn Go, Zig, Assembly.",
+                    "Improve Rust & Rest API knowledge.",
+                    "Create my own taskbar for Hyprland.",
+                    "Contribute to open source projects.",
+                ]}
+            />
+            <TimelineElement
+                title="2025"
+                description={[
+                    "Implement the Game of Life in C.",
+                    "Enroll in Electrical Engineering and Computer Science university course.",
+                    "Created the pong game in Javascript using canva.",
+                    "Learn Rust",
+                ]}
+            />
+            <TimelineElement
+                title="2024"
+                description={[
+                    "Created a C++ library to make CLIs.",
+                    "Wrote an unfinished book on Python.",
+                    "Created small temporary websites.",
+                ]}
+            />
+            <TimelineElement
+                }
+                title="Past"
+                description={[
+                    "Learned Python, Javascript, CSS and HTML.",
+                    "Created a website for the discord bot in VueJS.",
+                    "Created a moderation discord bot, which I abandoned after it reached 100 servers.",
+                ]}
+            />
+        </div>
     </section>
     <section id="contact-me">
+        <div id="contact-me__title">
+            <h1><span class="highlighted">Contact</span> me</h1>
+        </div>
         <ContactForm />
     </section>
 </Layout>
+
+<script>
+    import { gsap } from "gsap";
+    gsap.to("#scroll-down__image", {
+        y: 12,
+        duration: 1,
+        yoyo: true,
+        repeat: -1,
+    });
+</script>
 
 <style>
     section:not(#landing) {
@@ -152,6 +167,7 @@ import { Image } from "astro:assets";
         grid-template-columns: repeat(2, 1fr);
         min-height: 85vh;
         align-items: center;
+        overflow: hidden !important;
     }
 
     #scroll-down {
@@ -164,6 +180,7 @@ import { Image } from "astro:assets";
     }
 
     #my-skills > #my-skills__cards {
+        justify-items: center;
         display: grid;
         gap: 22px;
         grid-template-columns: repeat(3, 1fr);
@@ -173,8 +190,29 @@ import { Image } from "astro:assets";
     }
 
     #timeline {
+        margin-bottom: -60px !important;
+        padding-bottom: 0 !important ;
+        width: 100%;
+    }
+
+    #timeline__timeline-elements {
+        position: relative;
+        height: fit-content;
+        width: 100%;
+    }
+
+    #contact-me {
+        padding-top: 10em !important;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        gap: 2em;
+        background-color: var(--primary-clr);
+    }
+
+    #contact-me__title > h1 {
+        color: var(--background-clr);
+    }
+
+    @media (min-width: 1440px) {
     }
 </style>

@@ -1,5 +1,21 @@
-* {
+*,
+*::before,
+*::after {
     box-sizing: border-box;
+}
+
+*:not(dialog) {
+    margin: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        interpolate-size: allow-keywords;
+    }
+}
+
+body {
+    -webkit-font-smoothing: antialiased;
 }
 
 section {
@@ -16,11 +32,16 @@ a {
     --primary-clr-2: #4d5153;
     --secondary-clr: #d2d2d2;
     --background-clr: #ffffff;
+
+    --border-radius: min(18px, min(12px, 80%));
+
+    --xl-size: 1440px; /* >= above this value*/
+    --l-size: 1330px; /* >= above this value*/
+    --m-size: 880px; /* >= above this value*/
+    --s-size: 500px; /* >= above this value*/
 }
 
-h1,
-h1.normal {
-    font-size: 48px;
+h1 {
     font-weight: bold;
     letter-spacing: -3%;
     font-family: var(--font-kufam);
@@ -29,7 +50,6 @@ h1.normal {
 
 h2,
 h3 {
-    font-size: 36px;
     font-weight: 400;
     font-family: var(--font-lexend);
     color: var(--primary-clr-2);
@@ -70,10 +90,15 @@ ul {
     padding: 0;
 }
 
+textarea,
 li,
+label,
+input,
+label::placeholder,
+input::placeholder,
+button,
 p {
     font-family: var(--font-lexend);
-    font-size: 18px;
     color: var(--primary-clr);
 }
 
@@ -83,12 +108,71 @@ p {
 
 .underlined::after {
     position: absolute;
-    content: "...........";
-    font-size: 48px;
     left: 0;
     right: 0;
     bottom: -15px;
     color: var(--accent-clr);
     margin-inline: auto;
     width: fit-content;
+}
+
+@media screen and (min-width: 1440px) {
+    h1 {
+        font-size: 52px;
+    }
+
+    h2,
+    h3 {
+        font-size: 36px;
+    }
+
+    a,
+    li,
+    textarea,
+    textarea::placeholder,
+    p {
+        font-size: 18px;
+    }
+
+    .underlined::after {
+        content: "...........";
+        font-size: 48px;
+    }
+}
+
+@media screen and (max-width: 1440px) and (min-width: 1280px) {
+    h1 {
+        font-size: 48px;
+    }
+
+    h2,
+    h3 {
+        font-size: 32px;
+    }
+
+    li,
+    p {
+        font-size: 18px;
+    }
+
+    .underlined::after {
+        content: "...........";
+        font-size: 44px;
+    }
+}
+
+@media screen and (max-width: 1280px) and (min-width: 960px) {
+    h1 {
+        font-size: 48px;
+    }
+
+    h2,
+    h3 {
+        font-size: 36px;
+    }
+
+    li,
+    p {
+        font-size: 12px;
+    }
 }

@@ -6,25 +6,32 @@ interface Props {
 const { title } = Astro.props;
 ---
 
-<div class="header__element">
-    <div class="header__element--title">
+<div class="footer-element">
+    <div class="footer-element--title">
         <h6 class="bold">{title}</h6>
     </div>
-    <div class="header__element--content">
+    <div class="footer-element--content">
         <slot />
     </div>
 </div>
 
 <style>
-    .header__element {
+    .footer-element {
         align-items: start;
         text-align: start;
         gap: 1em;
+        color: var(--background-clr) !important;
     }
 
-    .header__element,
-    .header__element--content {
+    .bold {
+        color: var(--background-clr) !important;
+    }
+
+    .footer-element,
+    .footer-element--content {
+        color: var(--background-clr) !important;
         display: flex;
+        color: var(--background-clr) !important;
         flex-direction: column;
     }
 </style>

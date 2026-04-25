@@ -1,6 +1,4 @@
 ---
-import ElementPlacement from "../scripts/timeline-element.enum.ts";
-
 interface Props {
     title: string;
     description: string[];
@@ -18,15 +16,48 @@ const { title, description } = Astro.props;
 
 <style>
     .timeline {
+        position: absolute;
         max-width: min(40vw, 400px);
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        height: fit-content;
+        background-color: rgb(from var(--background-clr) r g b / 85%);
+        backdrop-filter: blur(8px);
+        transform: translate(-50%, -50%);
+        padding: 10px 20px;
+        outline: 7px solid var(--primary-clr);
+        border-radius: var(--border-radius);
     }
 
-    .timeline:nth-of-type(even) {
-        align-self: flex-end;
+    .timeline > h3,
+    .timeline > .highlighted {
+        margin: 0 !important;
+        padding: 5px 0 !important;
     }
 
     img {
         margin: auto;
         padding: 10px auto;
+    }
+
+    .timeline:nth-child(2) {
+        right: -27%;
+        top: 34%;
+    }
+
+    .timeline:nth-child(3) {
+        left: 8%;
+        top: 45%;
+    }
+
+    .timeline:nth-child(4) {
+        right: -26%;
+        top: 60%;
+    }
+
+    .timeline:nth-child(5) {
+        left: 10%;
+        top: 70%;
     }
 </style>
