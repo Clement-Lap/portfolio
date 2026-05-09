@@ -24,7 +24,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      
+
+      # ADDED: Setup Node.js to a version supported by Astro (>= 22.12.0)
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22 # Or 'lts/*' if it is currently v22+
+
       - name: Detect package manager
         id: detect-package-manager
         run: |
@@ -48,19 +54,14 @@ jobs:
         with:
           bun-version: "latest"
 
-      # ADDED: Install dependencies
       - name: Install dependencies
         run: bun ${{ steps.detect-package-manager.outputs.command }}
 
-      # ADDED: Build the project
       - name: Build
         run: bun astro build
         env:
-          # If your astro.config.mjs uses output: 'static', this is usually sufficient.
-          # If you use adapters, ensure you set the correct output directory.
           ASTRO_TELEMETRY_DISABLED: true
 
-      # ADDED: Upload the dist folder as an artifact
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
