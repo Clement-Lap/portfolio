@@ -54,7 +54,7 @@ jobs:
 
       # ADDED: Build the project
       - name: Build
-        run: bun run build
+        run: bun astro build
         env:
           # If your astro.config.mjs uses output: 'static', this is usually sufficient.
           # If you use adapters, ensure you set the correct output directory.
