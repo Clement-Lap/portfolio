@@ -8,139 +8,249 @@ import GloriousCat from "../images/clem/glorious-cat.png";
 ---
 
 <div id="carousel">
-    <Image src={AngryClem} id="img-1" alt="Little me, angry me." draggable="false" width={400} />
-    <Image src={ClemNCat} id="img-2" alt="Me holding a long cat." draggable="false" width={400} />
-    <Image src={DumbCat} id="img-3" alt="My dumb cat." draggable="false" width={400} />
-    <Image src={EvilCat} id="img-4" alt="My evil cat." draggable="false" width={400} />
-    <Image src={GloriousCat} id="img-5" alt="She looks like Batman." draggable="false" width={400} />
+    <Image
+        src={AngryClem}
+        id="img-1"
+        alt="Little me but angry"
+        draggable="false"
+        width={400}
+        data-description='I was at the beach with my family doing a "sandball" fight, when my brother hid a rock inside the ball (it hurt).'
+    />
+    <Image
+        src={ClemNCat}
+        id="img-2"
+        alt="Me holding a long cat"
+        draggable="false"
+        width={400}
+        data-description="Me and my former cat, Helis (Norwegian Forest cat breed)."
+    />
+    <Image
+        src={DumbCat}
+        id="img-3"
+        alt="My dumb cat"
+        draggable="false"
+        width={400}
+        data-description="My other cat, called Gazor-pazor-field, a reference to Rick and Morty (he's very fat and dumb)."
+    />
+    <Image
+        src={EvilCat}
+        id="img-4"
+        alt="My evil cat"
+        draggable="false"
+        width={400}
+        data-description='My current cat, called Plume (French for "feather") because she is tiny and lightweight.'
+    />
+    <Image
+        src={GloriousCat}
+        id="img-5"
+        alt="My cat looking like Batman"
+        draggable="false"
+        width={400}
+        data-description="She likes to go on my window to fight the crime in her city (watch for birds in the garden)."
+    />
     <button id="rewind">Rewind</button>
-    <p id="img-content"></p>
+    <p id="img-description"></p>
 </div>
 
 <script>
     import { gsap } from "gsap";
 
-    const caroussel = document.getElementById("carousel")!;
-    const button = document.getElementById("rewind")!;
-    const imgContent = document.getElementById("img-content")!;
+    type InteractionEvent = MouseEvent | TouchEvent;
 
-    const animationTime = 0.5;
-    const animationDelay = 0;
-    const deltaTreshold = 300;
+    const CarouselSwapEvent = new Event("carouselswap");
 
-    const phrases = [
-        'I was at the beach with my family doing a "sandball" fight, when my brother hid a rock inside the ball (it hurt).',
-        "Me and my former cat, Helis (Norwegian Forest cat breed).",
-        "My other cat, called Gazor-pazor-field, a reference to Rick and Morty (he's very fat and dumb).",
-        'My current cat, called Plume (French for "feather") because she is tiny and lightweight.',
-        "She likes to go on my window to fight the crime in her city (watch for birds in the garden)",
-    ];
+    class Carousel {
+        /*
+      readonly button = document.getElementById("rewind")!;
+      readonly imgContent = document.getElementById("img-content")!;
+      readonly animationTime = 0.5;
+      readonly deltaTreshold = 300; // how far the image has to move from its original position
+      readonly currentImageElement = document.getElementById("img-5")!;
+      */
+        readonly buttonElement: HTMLElement;
+        readonly imageDescriptionElement: HTMLElement;
+        readonly animationTime: number;
+        readonly deltaTreshold: number; // how far the image has to move from its original position
 
-    let currentImg = 5;
-    let isDragged = false;
-    let defaultX = 0;
-    let defaultY = 0;
+        currentImageElement: HTMLElement;
+        currentImage: number;
+        isDragged: boolean;
+        defaultOffsetX: number;
+        defaultOffsetY: number;
 
-    function reload() {
-        for (let i = 1; i <= 5; i++) {
-            gsap.to(`#img-${i}`, {
+        constructor(animationTime: number, deltaTreshold: number) {
+            this.buttonElement = document.getElementById("rewind")!;
+            this.currentImageElement = document.getElementById("img-5")!;
+            this.imageDescriptionElement = document.getElementById("img-description")!;
+
+            this.animationTime = animationTime;
+            this.deltaTreshold = deltaTreshold;
+
+            this.currentImage = 5;
+            this.defaultOffsetX = 0;
+            this.defaultOffsetY = 0;
+            this.isDragged = false;
+        }
+
+        private setNextImage() {
+            this.currentImage--;
+            if (this.currentImage < 1) this.currentImage = 1;
+            if (this.currentImage > 5) this.currentImage = 5; // should never happen
+            this.currentImageElement = document.getElementById(`img-${this.currentImage}`)!; // update the current image
+            this.setImgEvents();
+            this.setImageDescription();
+        }
+
+        private moveEventPos(event: InteractionEvent): [number, number] {
+            let clientX = 0;
+            let clientY = 0;
+
+            if (event instanceof MouseEvent) {
+                clientX = event.pageX;
+                clientY = event.pageY;
+            } else if (event instanceof TouchEvent) {
+                clientX = event.touches[0].pageX;
+                clientY = event.touches[0].pageY;
+            }
+
+            return [clientX, clientY];
+        }
+
+        private setImageDescription() {
+            this.imageDescriptionElement.innerHTML = this.currentImageElement.getAttribute("data-description") || "";
+        }
+
+        private resetImage() {
+            this.isDragged = false;
+            gsap.to(`#img-${this.currentImage}`, {
                 x: 0,
                 y: 0,
-                opacity: 1,
-                delay: 0.3 * i,
+                duration: this.animationTime * 1.5,
             });
+
+            this.currentImageElement.removeEventListener("mousemove", (event: MouseEvent) => this.moveImg(event));
+            this.currentImageElement.removeEventListener("touchmove", (event: TouchEvent) => this.moveImg(event));
+            this.currentImageElement.removeEventListener("mouseup", () => this.resetImage());
+            this.currentImageElement.removeEventListener("touchend", () => this.resetImage());
         }
 
-        currentImg = 5;
-        imgContent.innerHTML = phrases[4];
-    }
+        private reloadDefault() {
+            for (let i = 1; i <= 5; i++) {
+                gsap.to(`#img-${i}`, {
+                    pointerEvents: "all",
+                    x: 0,
+                    y: 0,
+                    opacity: 1,
+                    delay: 0.15 * (i - 1),
+                });
+            }
 
-    function init() {
-        imgContent.innerHTML = phrases[4];
-        for (let i = 1; i <= 5; i++) {
-            document.getElementById(`img-${i}`)!.style.zIndex = (i + 1).toString();
+            this.currentImage = 5;
+            this.currentImageElement = document.getElementById("img-5")!;
+            this.setImageDescription();
         }
-    }
 
-    button.onclick = () => reload();
+        private selectImg(event: InteractionEvent) {
+            this.isDragged = true;
 
-    function cleanup() {
-        isDragged = false;
-        gsap.to(`#img-${currentImg}`, {
-            x: 0,
-            y: 0,
-        });
-        document.removeEventListener("mousemove", move);
-        caroussel.removeEventListener("mousedown", select);
-    }
+            this.saveOffset(event);
 
-    function move(event: MouseEvent) {
-        if (!isDragged) return;
-        event.preventDefault();
-        const newX = event.pageX - defaultX;
-        const newY = event.pageY - defaultY;
-        const delta = Math.abs(newX) + Math.abs(newY);
-        gsap.to(`#img-${currentImg}`, {
-            x: newX,
-            y: newY,
-        });
+            this.currentImageElement.addEventListener("mousemove", (event: MouseEvent) => this.moveImg(event));
+            this.currentImageElement.addEventListener("touchmove", (event: TouchEvent) => this.moveImg(event));
+            this.currentImageElement.addEventListener("mouseup", () => this.resetImage());
+            this.currentImageElement.addEventListener("touchend", () => this.resetImage());
+        }
 
-        if (delta > deltaTreshold) {
-            isDragged = false;
-            gsap.to(`#img-${currentImg}`, {
+        private saveOffset(event: InteractionEvent) {
+            const [clientX, clientY] = this.moveEventPos(event);
+            this.defaultOffsetX = clientX;
+            this.defaultOffsetY = clientY;
+        }
+
+        private moveImg(event: InteractionEvent) {
+            if (!this.isDragged) return;
+            event.preventDefault();
+            const [clientX, clientY] = this.moveEventPos(event);
+
+            const newX = clientX - this.defaultOffsetX;
+            const newY = clientY - this.defaultOffsetY;
+            const delta = Math.abs(newX) + Math.abs(newY); // should've been `sqrt(newX² + newY²)` for precision, but overkill
+            gsap.to(`#img-${this.currentImage}`, {
+                x: newX,
+                y: newY,
+                duration: this.animationTime,
+            });
+
+            if (delta > this.deltaTreshold) document.dispatchEvent(CarouselSwapEvent);
+        }
+
+        private swapImage() {
+            this.isDragged = false;
+
+            // remove previous events
+            this.currentImageElement.removeEventListener("mouseup", this.resetImage);
+            this.currentImageElement.removeEventListener("mousemove", this.moveImg);
+            this.currentImageElement.removeEventListener("mousedown", this.selectImg);
+
+            // remove the image visually and interactively
+            gsap.to(`#img-${this.currentImage}`, {
                 opacity: 0,
-                duration: 0.3,
-                onComplete: () => {
-                    document.getElementById(`#img-${currentImg}`)?.remove();
-                },
+                pointerEvents: "none",
+                duration: this.animationTime,
+                overwrite: true,
             });
-            currentImg--;
-            imgContent.innerHTML = phrases[currentImg - 1] || "";
+
+            // self explanatory
+            this.setNextImage();
+            this.setImageDescription();
         }
 
-        if (currentImg < 1) currentImg = 1;
-        if (currentImg > 5) currentImg = 5; // should never happen
+        private setImgEvents() {
+            this.currentImageElement.addEventListener("mousedown", (event: InteractionEvent) => this.selectImg(event));
+            this.currentImageElement.addEventListener("touchstart", (event: InteractionEvent) => this.selectImg(event));
+        }
+
+        private startAnimation() {
+            gsap.to("#img-1", {
+                x: 5,
+                y: -2,
+                rotate: 6,
+                duration: this.animationTime,
+            });
+            gsap.to("#img-2", {
+                x: -5,
+                rotate: -12,
+                duration: this.animationTime,
+            });
+            gsap.to("#img-3", {
+                x: 2,
+                y: 2,
+                rotate: 9,
+                duration: this.animationTime,
+            });
+            gsap.to("#img-5", {
+                x: 1,
+                y: -2,
+                rotate: 3,
+                duration: this.animationTime,
+            });
+        }
+
+        public initEvents() {
+            this.currentImageElement.addEventListener("mousedown", (event: InteractionEvent) => this.selectImg(event));
+            this.currentImageElement.addEventListener("touchstart", (event: InteractionEvent) => this.selectImg(event));
+            document.addEventListener("carouselswap", () => this.swapImage());
+            this.buttonElement.onclick = () => this.reloadDefault();
+        }
+        public setup() {
+            this.startAnimation();
+            this.initEvents();
+            this.setImageDescription();
+        }
     }
 
-    function select(event: MouseEvent) {
-        defaultX = event.pageX;
-        defaultY = event.pageY;
-        isDragged = true;
-    }
-
-    document.addEventListener("mousemove", (event: MouseEvent) => move(event));
-    caroussel.addEventListener("mousedown", (event: MouseEvent) => select(event));
-    document.addEventListener("mouseup", () => cleanup());
-
-    gsap.to("#img-1", {
-        x: 5,
-        y: -2,
-        rotate: 6,
-        delay: animationDelay,
-        duration: animationTime,
-    });
-    gsap.to("#img-2", {
-        x: -5,
-        rotate: -12,
-        delay: animationDelay,
-        duration: animationTime,
-    });
-    gsap.to("#img-3", {
-        x: 2,
-        y: 2,
-        rotate: 9,
-        delay: animationDelay,
-        duration: animationTime,
-    });
-    gsap.to("#img-5", {
-        x: 1,
-        y: -2,
-        rotate: 3,
-        delay: animationDelay,
-        duration: animationTime,
-    });
-
-    init();
+    const carousel = new Carousel(0.3, 350);
+    carousel.setup();
 </script>
 
 <style>
@@ -155,10 +265,30 @@ import GloriousCat from "../images/clem/glorious-cat.png";
 
     div > img {
         user-select: none;
-        pointer-events: none;
+        pointer-events: all;
         width: 340px;
         height: auto;
         border-radius: calc(var(--border-radius) * 4);
+    }
+
+    div > img:nth-child(1) {
+        z-index: 2;
+    }
+
+    div > img:nth-child(2) {
+        z-index: 3;
+    }
+
+    div > img:nth-child(3) {
+        z-index: 4;
+    }
+
+    div > img:nth-child(4) {
+        z-index: 5;
+    }
+
+    div > img:nth-child(5) {
+        z-index: 6;
     }
 
     div > * {
@@ -176,8 +306,10 @@ import GloriousCat from "../images/clem/glorious-cat.png";
     }
 
     p {
+        font-size: 1.2em; /* the font looks smaller by default */
         top: 100% !important;
-        font-family: var(--font-akaya);
+        font-family: var(--font-akaya) !important;
+        font-weight: 400;
         user-select: none;
     }
 </style>
