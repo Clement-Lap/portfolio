@@ -8,68 +8,76 @@ import GloriousCat from "../images/clem/glorious-cat.png";
 ---
 
 <div id="carousel">
-    <Image
-        src={AngryClem}
-        id="img-1"
-        alt="Little me but angry"
-        draggable="false"
-        width={400}
-        data-description='I was at the beach with my family doing a "sandball" fight, when my brother hid a rock inside the ball (it hurt).'
-    />
-    <Image
-        src={ClemNCat}
-        id="img-2"
-        alt="Me holding a long cat"
-        draggable="false"
-        width={400}
-        data-description="Me and my former cat, Helis (Norwegian Forest cat breed)."
-    />
-    <Image
-        src={DumbCat}
-        id="img-3"
-        alt="My dumb cat"
-        draggable="false"
-        width={400}
-        data-description="My other cat, called Gazor-pazor-field, a reference to Rick and Morty (he's very fat and dumb)."
-    />
-    <Image
-        src={EvilCat}
-        id="img-4"
-        alt="My evil cat"
-        draggable="false"
-        width={400}
-        data-description='My current cat, called Plume (French for "feather") because she is tiny and lightweight.'
-    />
-    <Image
-        src={GloriousCat}
-        id="img-5"
-        alt="My cat looking like Batman"
-        draggable="false"
-        width={400}
-        data-description="She likes to go on my window to fight the crime in her city (watch for birds in the garden)."
-    />
-    <button id="rewind">Rewind</button>
+    <div id="carousel-wrapper">
+        <Image
+            src={AngryClem}
+            id="img-1"
+            alt="Little me but angry"
+            draggable="false"
+            width={400}
+            data-description='I was at the beach with my family doing a "sandball" fight, when my brother hid a rock inside the ball (it hurt).'
+        />
+        <Image
+            src={ClemNCat}
+            id="img-2"
+            alt="Me holding a long cat"
+            draggable="false"
+            width={400}
+            data-description="Me and my former cat, Helis (Norwegian Forest cat breed)."
+        />
+        <Image
+            src={DumbCat}
+            id="img-3"
+            alt="My dumb cat"
+            draggable="false"
+            width={400}
+            data-description="My other cat, called Gazor-pazor-field, a reference to Rick and Morty (he's very fat and dumb)."
+        />
+        <Image
+            src={EvilCat}
+            id="img-4"
+            alt="My evil cat"
+            draggable="false"
+            width={400}
+            data-description='My current cat, called Plume (French for "feather") because she is tiny and lightweight.'
+        />
+        <Image
+            src={GloriousCat}
+            id="img-5"
+            alt="My cat looking like Batman"
+            draggable="false"
+            width={400}
+            data-description="She likes to go on my window to fight the crime in her city (watch for birds in the garden)."
+        />
+        <button id="rewind">Rewind</button>
+    </div>
     <p id="img-description"></p>
 </div>
 
 <script>
-    import { gsap } from "gsap";
-
     type InteractionEvent = MouseEvent | TouchEvent;
 
     const CarouselSwapEvent = new Event("carouselswap");
+    const imagesQuerySelector = "#carousel > #carousel-wrapper > img";
+
+    let carousel: Carousel | null;
+    let prevMedia: boolean | null = null;
 
     class Carousel {
-        /*
-      readonly button = document.getElementById("rewind")!;
-      readonly imgContent = document.getElementById("img-content")!;
-      readonly animationTime = 0.5;
-      readonly deltaTreshold = 300; // how far the image has to move from its original position
-      readonly currentImageElement = document.getElementById("img-5")!;
-      */
+        readonly imageDescriptionElement: HTMLElement;
+        constructor() {
+            this.imageDescriptionElement = document.getElementById("img-description")!;
+        }
+        public setup(): void {}
+        public destructor(): void {}
+        protected setImageDescription(currentImageElement: HTMLElement) {
+            this.imageDescriptionElement.innerHTML = currentImageElement.getAttribute("data-description") || "";
+        }
+    }
+    class SwipeCarousel extends Carousel {
         readonly buttonElement: HTMLElement;
         readonly imageDescriptionElement: HTMLElement;
-        readonly animationTime: number;
+        readonly animationRatio: number;
         readonly deltaTreshold: number; // how far the image has to move from its original position
 
         currentImageElement: HTMLElement;
@@ -78,12 +86,13 @@ import GloriousCat from "../images/clem/glorious-cat.png";
         defaultOffsetX: number;
         defaultOffsetY: number;
 
-        constructor(animationTime: number, deltaTreshold: number) {
+        constructor(animationRatio: number, deltaTreshold: number) {
+            super();
             this.buttonElement = document.getElementById("rewind")!;
             this.currentImageElement = document.getElementById("img-5")!;
             this.imageDescriptionElement = document.getElementById("img-description")!;
 
-            this.animationTime = animationTime;
+            this.animationRatio = animationRatio;
             this.deltaTreshold = deltaTreshold;
 
             this.currentImage = 5;
@@ -98,7 +107,7 @@ import GloriousCat from "../images/clem/glorious-cat.png";
             if (this.currentImage > 5) this.currentImage = 5; // should never happen
             this.currentImageElement = document.getElementById(`img-${this.currentImage}`)!; // update the current image
             this.setImgEvents();
-            this.setImageDescription();
+            this.setImageDescription(this.currentImageElement);
         }
 
         private moveEventPos(event: InteractionEvent): [number, number] {
@@ -116,17 +125,10 @@ import GloriousCat from "../images/clem/glorious-cat.png";
             return [clientX, clientY];
         }
 
-        private setImageDescription() {
-            this.imageDescriptionElement.innerHTML = this.currentImageElement.getAttribute("data-description") || "";
-        }
-
         private resetImage() {
             this.isDragged = false;
-            gsap.to(`#img-${this.currentImage}`, {
-                x: 0,
-                y: 0,
-                duration: this.animationTime * 1.5,
-            });
+            this.currentImageElement.style.transitionDuration = `${0.3 * this.animationRatio}s`;
+            this.currentImageElement.style.transform = "translate(-50%, -50%)";
 
             this.currentImageElement.removeEventListener("mousemove", (event: MouseEvent) => this.moveImg(event));
             this.currentImageElement.removeEventListener("touchmove", (event: TouchEvent) => this.moveImg(event));
@@ -135,19 +137,19 @@ import GloriousCat from "../images/clem/glorious-cat.png";
         }
 
         private reloadDefault() {
-            for (let i = 1; i <= 5; i++) {
-                gsap.to(`#img-${i}`, {
-                    pointerEvents: "all",
-                    x: 0,
-                    y: 0,
-                    opacity: 1,
-                    delay: 0.15 * (i - 1),
-                });
-            }
+            document.querySelectorAll(imagesQuerySelector).forEach((elementNode, i) => {
+                const element = elementNode as HTMLElement;
+                element.style.transitionDelay = `${0.3 * i * this.animationRatio}s`;
+                element.style.pointerEvents = "all";
+                element.style.opacity = "1";
+                setTimeout(() => (element.style.transitionDelay = "0s"), 300 * i * this.animationRatio);
+            });
 
-            this.currentImage = 5;
-            this.currentImageElement = document.getElementById("img-5")!;
-            this.setImageDescription();
+            this.currentImage = document.querySelectorAll(imagesQuerySelector).length;
+            this.currentImageElement = document.getElementById(`img-${this.currentImage}`)!;
+            this.animateImages();
+            this.setImgEvents();
+            this.setImageDescription(this.currentImageElement);
         }
 
         private selectImg(event: InteractionEvent) {
@@ -155,8 +157,8 @@ import GloriousCat from "../images/clem/glorious-cat.png";
 
             this.saveOffset(event);
 
-            this.currentImageElement.addEventListener("mousemove", (event: MouseEvent) => this.moveImg(event));
-            this.currentImageElement.addEventListener("touchmove", (event: TouchEvent) => this.moveImg(event));
+            document.addEventListener("mousemove", (event: MouseEvent) => this.moveImg(event));
+            document.addEventListener("touchmove", (event: TouchEvent) => this.moveImg(event));
             this.currentImageElement.addEventListener("mouseup", () => this.resetImage());
             this.currentImageElement.addEventListener("touchend", () => this.resetImage());
         }
@@ -175,34 +177,70 @@ import GloriousCat from "../images/clem/glorious-cat.png";
             const newX = clientX - this.defaultOffsetX;
             const newY = clientY - this.defaultOffsetY;
             const delta = Math.abs(newX) + Math.abs(newY); // should've been `sqrt(newX² + newY²)` for precision, but overkill
-            gsap.to(`#img-${this.currentImage}`, {
-                x: newX,
-                y: newY,
-                duration: this.animationTime,
-            });
 
-            if (delta > this.deltaTreshold) document.dispatchEvent(CarouselSwapEvent);
+            if (delta > this.deltaTreshold) {
+                document.dispatchEvent(CarouselSwapEvent);
+                return;
+            }
+            this.currentImageElement.style.transitionDuration = `${0.1 * this.animationRatio}s`;
+            this.currentImageElement.style.transform = `translate(-50%, -50%) translate3d(${newX}px, ${newY}px, 0)`;
         }
 
         private swapImage() {
             this.isDragged = false;
 
             // remove previous events
-            this.currentImageElement.removeEventListener("mouseup", this.resetImage);
-            this.currentImageElement.removeEventListener("mousemove", this.moveImg);
-            this.currentImageElement.removeEventListener("mousedown", this.selectImg);
+            this.currentImageElement.removeEventListener("mousedown", (event) => this.selectImg(event));
+            this.currentImageElement.removeEventListener("touchstart", (event) => this.selectImg(event));
+            this.currentImageElement.removeEventListener("mouseup", () => this.resetImage());
+            this.currentImageElement.removeEventListener("touchend", () => this.resetImage());
+            document.removeEventListener("mousemove", (event) => this.moveImg(event));
+            document.removeEventListener("touchmove", (event) => this.moveImg(event));
 
             // remove the image visually and interactively
-            gsap.to(`#img-${this.currentImage}`, {
-                opacity: 0,
-                pointerEvents: "none",
-                duration: this.animationTime,
-                overwrite: true,
-            });
+            this.currentImageElement.style.opacity = "0";
+            this.currentImageElement.style.pointerEvents = "none";
 
             // self explanatory
             this.setNextImage();
-            this.setImageDescription();
+            this.setImageDescription(this.currentImageElement);
+        }
+
+        private animateImages(maxX: number = 12, maxY: number = 12, maxDeg: number = 20) {
+            document.querySelectorAll(imagesQuerySelector).forEach((element) => {
+                const imgElement = element as HTMLElement;
+                imgElement.style.left = "50%";
+                const randX = Math.floor(Math.random() * maxX - maxX / 2);
+                const randY = Math.floor(Math.random() * maxY - maxY / 2);
+                const randDeg = Math.floor(Math.random() * maxDeg - maxDeg / 2);
+                imgElement.style.transitionDuration = `${0.6 * this.animationRatio}s`;
+                imgElement.style.transform = `translate(-50%, -50%) translate(${randX}px, ${randY}px) rotate(${randDeg}deg)`;
+
+                setTimeout(
+                    () => (imgElement.style.transitionDuration = `${0.3 * this.animationRatio}s`),
+                    600 * this.animationRatio,
+                );
+            });
+        }
+
+        public destructor(): void {
+            document.querySelectorAll(imagesQuerySelector).forEach((elementNode) => {
+                const element = elementNode as HTMLElement;
+                // reset all interactions on image
+                element.ontouchstart = null;
+                element.onmousedown = null;
+                element.onmousemove = null;
+                element.ontouchmove = null;
+                element.onmouseup = null;
+                element.ontouchend = null;
+
+                // reset style
+                element.style.opacity = "1";
+                element.style.transform = "";
+                element.style.pointerEvents = "auto";
+            });
+
+            document.removeEventListener("carouselswap", () => this.swapImage());
         }
 
         private setImgEvents() {
@@ -210,106 +248,223 @@ import GloriousCat from "../images/clem/glorious-cat.png";
             this.currentImageElement.addEventListener("touchstart", (event: InteractionEvent) => this.selectImg(event));
         }
 
-        private startAnimation() {
-            gsap.to("#img-1", {
-                x: 5,
-                y: -2,
-                rotate: 6,
-                duration: this.animationTime,
-            });
-            gsap.to("#img-2", {
-                x: -5,
-                rotate: -12,
-                duration: this.animationTime,
-            });
-            gsap.to("#img-3", {
-                x: 2,
-                y: 2,
-                rotate: 9,
-                duration: this.animationTime,
-            });
-            gsap.to("#img-5", {
-                x: 1,
-                y: -2,
-                rotate: 3,
-                duration: this.animationTime,
-            });
-        }
-
-        public initEvents() {
+        private initEvents() {
             this.currentImageElement.addEventListener("mousedown", (event: InteractionEvent) => this.selectImg(event));
             this.currentImageElement.addEventListener("touchstart", (event: InteractionEvent) => this.selectImg(event));
             document.addEventListener("carouselswap", () => this.swapImage());
             this.buttonElement.onclick = () => this.reloadDefault();
         }
-        public setup() {
-            this.startAnimation();
+
+        public override setup() {
+            this.animateImages();
             this.initEvents();
-            this.setImageDescription();
+            this.setImageDescription(this.currentImageElement);
+        }
+    }
+    class HorizontalCarousel extends Carousel {
+        private current: number;
+        private switchDelaySec: number;
+        private interval: number | undefined;
+
+        constructor(switchDelaySec: number) {
+            super();
+            this.interval = undefined;
+            this.current = 1;
+            this.switchDelaySec = switchDelaySec;
+        }
+
+        private incrementImage() {
+            this.current++;
+            if (this.current > 5) this.current = 1;
+            if (this.current < 1) this.current = 5; // shouldn't happen
+        }
+
+        private getImageCount(index: number): number {
+            let count: number = this.current + index;
+            if (count > 5) count = 1;
+            if (count < 1) count += 5 /* * (Math.abs(index) % 5)*/;
+            return count;
+        }
+
+        private calculateZIndex() {
+            const totalImages = document.querySelectorAll(imagesQuerySelector).length;
+            document.querySelectorAll(imagesQuerySelector).forEach((imgElement: Element) => {
+                const imgElementId: number = parseInt(imgElement.id[imgElement.id.length - 1], 10);
+                const diff = Math.abs(this.current - imgElementId);
+                const difference = Math.min(diff, totalImages - diff); // AI used here to shorten a small if - else to math
+                (imgElement as HTMLElement).style.zIndex = `${5 - difference}`;
+            });
+        }
+
+        private moveImages(prev: HTMLElement, curr: HTMLElement, next: HTMLElement) {
+            prev.style.left = "0";
+            prev.style.right = "";
+            prev.style.transform = "translate(0%, -50%) scale(0.5)";
+
+            next.style.right = "0";
+            next.style.left = "";
+            next.style.transform = "translate(0%, -50%) scale(0.5)";
+
+            curr.style.left = "50%";
+            curr.style.transform = "translate(-50%, -50%) scale(1)";
+        }
+
+        private styleCurrentImages() {
+            const currentImageElement = document.getElementById(`img-${this.current}`)!;
+            const prevImageElement = document.getElementById(`img-${this.getImageCount(-1)}`)!;
+            const nextImageElement = document.getElementById(`img-${this.getImageCount(1)}`)!;
+            this.calculateZIndex();
+            this.moveImages(prevImageElement, currentImageElement, nextImageElement);
+        }
+
+        private resetStyleImage() {
+            const prevImageElement = document.getElementById(`img-${this.getImageCount(-3)}`)!;
+            prevImageElement.style.right = "0";
+            prevImageElement.style.left = "";
+        }
+
+        private loop() {
+            this.resetStyleImage();
+            this.styleCurrentImages();
+            this.setImageDescription(document.getElementById(`img-${this.getImageCount(0)}`)!);
+            this.incrementImage();
+        }
+
+        public override setup(): void {
+            this.loop();
+            this.interval = setInterval(() => {
+                this.loop();
+            }, this.switchDelaySec * 1000);
+        }
+
+        public destructor() {
+            clearInterval(this.interval);
         }
     }
 
-    const carousel = new Carousel(0.3, 350);
-    carousel.setup();
+    function displayCarousel() {
+        const widthMedia = window.matchMedia("(width < 1280px)").matches;
+        if (widthMedia != prevMedia) {
+            prevMedia = widthMedia;
+            carousel?.destructor();
+
+            if (widthMedia) {
+                carousel = new HorizontalCarousel(7);
+            } else {
+                carousel = new SwipeCarousel(1, 350);
+            }
+            if (carousel) {
+                carousel.setup();
+            }
+        }
+    }
+
+    displayCarousel();
+
+    window.addEventListener("resize", () => displayCarousel());
 </script>
 
 <style>
-    #carousel {
-        position: relative;
-        width: 100%;
+    #carousel > p {
+        font-size: 1.2em; /* the font looks smaller by default */
+        font-family: var(--font-akaya) !important;
+        font-weight: 400;
+        user-select: none;
         height: 100%;
-        transform-origin: 0% 0%;
+        text-align: center;
+        width: min(400px, 45vw);
+        text-wrap: wrap;
+        margin: auto;
+    }
+
+    #carousel {
+        justify-content: center;
         display: flex;
         flex-direction: column;
     }
 
-    div > img {
-        user-select: none;
-        pointer-events: all;
-        width: 340px;
-        height: auto;
+    #carousel-wrapper > img {
         border-radius: calc(var(--border-radius) * 4);
-    }
-
-    div > img:nth-child(1) {
-        z-index: 2;
-    }
-
-    div > img:nth-child(2) {
-        z-index: 3;
-    }
-
-    div > img:nth-child(3) {
-        z-index: 4;
-    }
-
-    div > img:nth-child(4) {
-        z-index: 5;
-    }
-
-    div > img:nth-child(5) {
-        z-index: 6;
-    }
-
-    div > * {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-
-    button {
-        z-index: 1;
-        padding: 2ch 4ch;
-        border-radius: var(--border-radius);
-        border: none;
-    }
-
-    p {
-        font-size: 1.2em; /* the font looks smaller by default */
-        top: 100% !important;
-        font-family: var(--font-akaya) !important;
-        font-weight: 400;
         user-select: none;
+        height: auto;
+        width: min(400px, 45vw);
+        transition: all 0.6s;
+    }
+
+    #carousel-wrapper {
+        position: relative;
+        height: 640px;
+        overflow: hidden;
+        width: 100%;
+    }
+
+    @media (width > 1280px) {
+        #carousel-wrapper {
+            transform-origin: 0% 0%;
+        }
+
+        #carousel-wrapper > img {
+            position: absolute;
+            user-select: none;
+            pointer-events: all;
+            width: min(24vw, 340px);
+            height: auto;
+            transition: all 0.2s;
+        }
+
+        #carousel-wrapper > img:nth-child(1) {
+            z-index: 2;
+        }
+
+        #carousel-wrapper > img:nth-child(2) {
+            z-index: 3;
+        }
+
+        #carousel-wrapper > img:nth-child(3) {
+            z-index: 4;
+        }
+
+        #carousel-wrapper > img:nth-child(4) {
+            z-index: 5;
+        }
+
+        #carousel-wrapper > img:nth-child(5) {
+            z-index: 6;
+        }
+
+        #carousel-wrapper > * {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        button {
+            z-index: 1;
+            padding: 2em 4em;
+            border-radius: var(--border-radius);
+            border: none;
+        }
+    }
+
+    @media (width < 1280px) {
+        #carousel-wrapper {
+            position: relative;
+            height: 640px;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        #carousel-wrapper > img {
+            position: absolute;
+            top: 50%;
+            right: 0;
+            z-index: 1;
+            transform: translate(0, -50%) scale(0.5);
+        }
+
+        #carousel-wrapper > button {
+            display: none;
+        }
     }
 </style>
