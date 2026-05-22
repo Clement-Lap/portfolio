@@ -40,7 +40,6 @@
     };
 
     async function sendData() {
-        let result;
         try {
             const response = await fetch("https://www.nonexistant.domain.com", {
                 method: "POST",
@@ -48,12 +47,12 @@
                 mode: "no-cors",
             });
             if (response.ok) {
-                result = "Your message was sent !";
+                code.innerHTML = "Your message was sent !";
             } else {
                 throw new Error(response.statusText);
             }
         } catch (e: any) {
-            result = e.toString();
+            code.innerHTML = e.toString();
         }
     }
 
@@ -153,11 +152,14 @@
         position: absolute;
         width: 100%;
         height: 100%;
-        font-size: 7em;
+        font-size: 7.5vw;
         font-weight: 600;
         text-transform: uppercase;
         z-index: 1;
         left: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         transition: 0.3s ease-in-out;
     }
 
@@ -187,4 +189,22 @@
     form:not(:invalid) .form__button__content:nth-child(2) {
         top: 0;
     }
+
+    /*
+
+    @media (max-width: 1440px) {
+        .form__button__content {
+            font-size: 6.2em;
+            margin: auto;
+        }
+    }
+
+    @media (max-width: 1280px) {
+        .form__button__content {
+            font-size: 5.5em;
+            margin: auto;
+        }
+    }
+
+    */
 </style>

@@ -1,7 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import SkillImages from "../scripts/skill-card-imports";
-import type { ISkillImage } from "../scripts/skill-image.interface";
+import { type ISkillImage } from "../scripts/skill-card-imports";
 
 export interface Props {
     title: string;
@@ -25,22 +24,25 @@ const { title, description, images, direction = "vertical" } = Astro.props;
     </div>
     <div class="skill-card__images">
         {
-            images.map((img) => (
-                <Image
-                    src={img.import}
-                    class={`${img.highlight ? "language-logo highlighted-logo" : "language-logo"}`}
-                    width={128}
-                    height={128}
-                    alt={img.alt}
-                />
-            ))
+            images
+                .sort((img1, img2) => (img1.highlight === img2.highlight ? 0 : img1.highlight ? -1 : 1))
+                // https://www.geeksforgeeks.org/javascript/sort-an-array-of-objects-using-boolean-property-in-javascript/
+                .map((img) => (
+                    <Image
+                        src={img.import}
+                        class={`${img.highlight ? "language-logo highlighted-logo" : "language-logo"}`}
+                        width={128}
+                        height={128}
+                        alt={img.alt}
+                    />
+                ))
         }
     </div>
 </div>
 
 <style>
     .skill-card {
-        display: grid;
+        display: flex;
         padding: 16px;
         gap: 20px;
         border: 1px solid var(--accent-clr);
@@ -49,15 +51,14 @@ const { title, description, images, direction = "vertical" } = Astro.props;
     }
 
     .horizontal {
-        grid-template-columns: repeat(2, 1fr);
+        flex-direction: row;
     }
 
     .vertical {
-        grid-template-columns: 1fr;
+        flex-direction: column;
     }
 
     .skill-card__text {
-        grid-template-rows: 1fr 2fr;
     }
 
     .skill-card__text > h3,
@@ -67,17 +68,10 @@ const { title, description, images, direction = "vertical" } = Astro.props;
     }
 
     .skill-card__images {
-        display: grid;
+        display: flex;
+        flex-wrap: wrap;
         height: fit-content;
         gap: 6px;
-    }
-
-    .vertical > .skill-card__images {
-        grid-template-columns: repeat(4, 1fr);
-    }
-
-    .horizontal > .skill-card__images {
-        grid-template-columns: repeat(5, 1fr);
     }
 
     .skill-card:nth-child(1) {
@@ -98,8 +92,12 @@ const { title, description, images, direction = "vertical" } = Astro.props;
 
     .skill-card__images > img {
         padding: 6px;
-        width: min(100%, 64px);
+        flex: 1 1 0%;
+        min-width: 51px;
+        max-width: 64px;
+        object-fit: cover;
         height: auto;
+        aspect-ratio: 1;
         border-radius: var(--border-radius);
     }
 
@@ -107,13 +105,6 @@ const { title, description, images, direction = "vertical" } = Astro.props;
         background-color: var(--accent-clr);
     }
 
-    @media screen and (max-width: 1330px) and (min-width: 960px) {
-        .vertical > .skill-card__images {
-            grid-template-columns: repeat(3, 1fr);
-        }
-
-        .horizontal > .skill-card__images {
-            grid-template-columns: repeat(4, 1fr);
-        }
+    @media (max-width: 1280px) and (min-width: 960px) {
     }
 </style>

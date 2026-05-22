@@ -2,7 +2,7 @@
 import Layout from "../layouts/layout.astro";
 import Carousel from "../components/carousel.astro";
 import SkillCards, { Direction } from "../components/skill-cards.astro";
-import SkillImages from "../scripts/skill-card-imports";
+import { SkillImages } from "../scripts/skill-card-imports";
 import TimelineElement from "../components/timeline-element.astro";
 import ContactForm from "../components/contact-form.astro";
 import ScrollDownArrowImage from "../images/other/scroll-down-arrow.svg";
@@ -31,7 +31,7 @@ import { Image } from "astro:assets";
         <Image id="scroll-down__image" src={ScrollDownArrowImage} alt="An arrow" />
     </section>
     <section id="my-skills">
-        <div id="my-skills__text">
+        <div id="my-skills__title">
             <h1>My <span class="highlighted">tech stack</span></h1>
         </div>
         <div id="my-skills__cards">
@@ -213,6 +213,21 @@ import { Image } from "astro:assets";
         color: var(--background-clr);
     }
 
-    @media (min-width: 1440px) {
+    @media (max-width: 1280px) {
+        #landing {
+            grid-template-columns: 1fr;
+            grid-template-rows: 1fr 3fr;
+        }
+
+        #landing-text__name > h1 {
+            font-size: 7vw;
+        }
+
+        #my-skills > #my-skills__cards {
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-areas:
+                "frontend backend"
+                "software tools";
+        }
     }
 </style>

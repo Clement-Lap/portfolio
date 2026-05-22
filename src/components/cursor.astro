@@ -1,26 +1,40 @@
-<div id="mouse"></div>
-
 <script>
     import { gsap } from "gsap";
 
     const defaultSize = 70;
-    const treshold = 180;
+    let isInit = false;
 
-    document.addEventListener("mousemove", (event) => {
-        const left = Math.max(defaultSize / 2, Math.min(document.body.clientWidth - defaultSize / 2, event.pageX));
-        gsap.to("#mouse", {
-            top: event.pageY,
+    function moveCursor(event: MouseEvent) {
+        if (!isInit) return; // does not try to move the cursor if not created
+        const clientX = event.pageX;
+        const clientY = event.pageY;
+
+        const left = Math.max(defaultSize / 2, Math.min(document.body.clientWidth - defaultSize / 2, clientX));
+        gsap.to("#cursor", {
+            top: clientY,
             left: left,
-            duration: 0.1,
+            duration: 0.06,
         });
-    });
+    }
+
+    /// if mouse moving -> create the cursor
+    function toggleCursor() {
+        const cursor = document.createElement("div");
+        cursor.id = "cursor";
+        document.body.appendChild(cursor);
+        isInit = true;
+        document.body.removeEventListener("mouseenter", toggleCursor); // kill itself so its fired once
+    }
+
+    document.addEventListener("mousemove", moveCursor);
+    document.body.addEventListener("mouseenter", toggleCursor);
 </script>
 
-<style>
+<style is:global>
     body {
         position: relative;
     }
-    #mouse {
+    #cursor {
         z-index: 100;
         background-color: #ffffff00;
         backdrop-filter: invert(100%);

@@ -31,7 +31,11 @@ import rust from "../images/languages/rust.png";
 import vite from "../images/languages/vite.png";
 import windows from "../images/languages/windows.png";
 
-import type { ISkillImage } from "./interfaces/skill-image.interface";
+interface ISkillImage {
+  import: ImageMetadata;
+  highlight: boolean;
+  alt: string;
+}
 
 const SkillImages = {
   angular: { import: angular, highlight: false, alt: "Angular" } as ISkillImage,
@@ -68,4 +72,4 @@ const SkillImages = {
   windows: { import: windows, highlight: false, alt: "Windows" } as ISkillImage,
 };
 
-export default SkillImages;
+export { type ISkillImage, SkillImages };
