@@ -17,5 +17,5 @@ bun run dev # or npm run dev
 ```
 
 # AI
-I do NOT vibecode or use AI, except for some refactoring (eg.: [this file](https://github.com/Clement-Lap/portfolio/blob/master/src/scripts/skill-card-imports.ts)).
+I do NOT vibecode or use AI, except for some refactoring (eg.: [this file](src/scripts/skill-card-imports.ts)).
 Any AI use will be disclosed in a comment next to the line.
