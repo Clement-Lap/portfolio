@@ -147,16 +147,6 @@ import { Image } from "astro:assets";
     </section>
 </Layout>
 
-<script>
-    import { gsap } from "gsap";
-    gsap.to("#scroll-down__image", {
-        y: 12,
-        duration: 1,
-        yoyo: true,
-        repeat: -1,
-    });
-</script>
-
 <style>
     section:not(#landing) {
         padding: 40px 20% !important;
@@ -165,7 +155,6 @@ import { Image } from "astro:assets";
     #landing {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        min-height: 85vh;
         align-items: center;
         overflow: hidden !important;
     }
@@ -174,9 +163,14 @@ import { Image } from "astro:assets";
         display: flex;
     }
 
-    #scroll-down > img {
+    #scroll-down__image {
         width: 64px;
         margin: auto;
+        animation-name: Bounce;
+        animation-duration: 1s;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+        animation-timing-function: ease-in;
     }
 
     #my-skills > #my-skills__cards {
@@ -211,6 +205,15 @@ import { Image } from "astro:assets";
 
     #contact-me__title > h1 {
         color: var(--background-clr);
+    }
+
+    @keyframes Bounce {
+        from {
+            transform: translateY(0);
+        }
+        to {
+            transform: translateY(14px);
+        }
     }
 
     @media (max-width: 1280px) {
