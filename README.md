@@ -1,43 +1,21 @@
-# Astro Starter Kit: Minimal
+# My portfolio 🎇
+Done with (https://astro.build/)[Astro], and no framework. Design is based on a (https://www.figma.com/)[figma] file I made, and illustrations (the "tree") created in (https://store.serif.com/en-us/update/windows/designer/2/)[Affinity Photo 2].
+I used (https://bun.sh/)[Bun] since it is faster for webserver. While not affecting the frontend's performances, I prefer to keep the same stack for the whole website (including backend).
+
+# Deployment
+If you want to clone and deploy it locally for whatever reason, here is the process :
+- Check if you have `bun` or `npm` installed
+- Check if you have `git`
+- Check the "star" button of this repository
 
 ```sh
-bun create astro@latest -- --template minimal
+git clone https://github.com/Clement-Lap/portfolio.git
+cd portfolio/
+bun install # or npm install
+bun run dev # or npm run dev
+# open http://localhost:4321/ in your browser
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `bun install`             | Installs dependencies                            |
-| `bun dev`             | Starts local dev server at `localhost:4321`      |
-| `bun build`           | Build your production site to `./dist/`          |
-| `bun preview`         | Preview your build locally, before deploying     |
-| `bun astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `bun astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+# AI
+I do NOT vibecode or use AI, except for some refactoring (eg.: (https://github.com/Clement-Lap/portfolio/blob/master/src/scripts/skill-card-imports.ts)[this file]).
+Any AI use will be disclosed in a comment next to the line.
