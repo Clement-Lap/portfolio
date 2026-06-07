@@ -6,7 +6,7 @@ I used [Bun](https://bun.sh/) since it is faster for web servers. While not affe
 If you want to clone and deploy it locally for whatever reason, here is the process :
 - Check if you have `bun` or `npm` installed
 - Check if you have `git`
-- Check the "star" button of this repository
+- Check the *star* button of this repository
 
 ```sh
 git clone https://github.com/Clement-Lap/portfolio.git

@@ -6,29 +6,29 @@ import { Font } from "astro:assets";
 import "../styles/styles.pcss";
 
 interface Props {
-    lang: string;
-    title: string;
+	lang: string;
+	title: string;
 }
 
 const { lang, title } = Astro.props;
 ---
 
 <html lang={lang}>
-    <head>
-        <meta charset="utf-8" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="icon" href="/favicon.ico" />
-        <meta name="viewport" content="width=device-width" />
-        <meta name="generator" content={Astro.generator} />
-        <title>Clems portfolio - {title}</title>
-        <Font cssVariable="--font-kufam" />
-        <Font cssVariable="--font-lexend" />
-        <Font cssVariable="--font-akaya" />
-    </head>
-    <body>
-        <Cursor />
-        <Header />
-        <slot />
-        <Footer />
-    </body>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Clems portfolio - {title}</title>
+		<Font cssVariable="--font-kufam" />
+		<Font cssVariable="--font-lexend" />
+		<Font cssVariable="--font-akaya" />
+	</head>
+	<body>
+		<Cursor />
+		<Header />
+		<slot />
+		<Footer />
+	</body>
 </html>

@@ -1,4 +1,4 @@
-FROM dhi.io/bun:1-debian13-dev
+FROM oven/bun:alpine
 WORKDIR /app
 
 COPY . .

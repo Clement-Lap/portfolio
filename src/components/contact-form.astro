@@ -1,196 +1,196 @@
 <form>
-    <div id="form__name">
-        <input name="name" class="empty" minlength="3" required />
-        <label for="name">Name</label>
-    </div>
-    <div id="form__email">
-        <input name="email" class="empty" type="email" required />
-        <label for="email">Email</label>
-    </div>
-    <div id="form__message-body">
-        <textarea minlength="30" class="empty" name="body" required></textarea>
-        <label for="body">Message</label>
-    </div>
-    <button type="submit">
-        <div class="form__button__content" id="fill">fill</div>
-        <div class="form__button__content" id="send">send</div>
-    </button>
+	<div id="form__name">
+		<input name="name" class="empty" minlength="3" required />
+		<label for="name">Name</label>
+	</div>
+	<div id="form__email">
+		<input name="email" class="empty" type="email" required />
+		<label for="email">Email</label>
+	</div>
+	<div id="form__message-body">
+		<textarea minlength="30" class="empty" name="body" required></textarea>
+		<label for="body">Message</label>
+	</div>
+	<button type="submit">
+		<div class="form__button__content" id="fill">fill</div>
+		<div class="form__button__content" id="send">send</div>
+	</button>
 </form>
 <code id="result"></code>
 
 <script>
-    const inputs = document.querySelectorAll("input")!;
-    const textarea = document.querySelector("textarea")!;
-    const code = document.querySelector("code")!;
-    const form = document.querySelector("form")!;
-    const formData = new FormData(form);
+	const inputs = document.querySelectorAll("input")!;
+	const textarea = document.querySelector("textarea")!;
+	const code = document.querySelector("code")!;
+	const form = document.querySelector("form")!;
+	const formData = new FormData(form);
 
-    inputs.forEach((input) => {
-        input.oninput = () => {
-            let className: string = "";
-            if (input.value.trim().length <= 0) className = "empty";
-            input.className = className;
-        };
-    });
+	inputs.forEach((input) => {
+		input.oninput = () => {
+			let className: string = "";
+			if (input.value.trim().length <= 0) className = "empty";
+			input.className = className;
+		};
+	});
 
-    textarea.oninput = () => {
-        let className: string = "";
-        if (textarea.value.trim().length <= 0) className = "empty";
-        textarea.className = className;
-    };
+	textarea.oninput = () => {
+		let className: string = "";
+		if (textarea.value.trim().length <= 0) className = "empty";
+		textarea.className = className;
+	};
 
-    async function sendData() {
-        try {
-            const response = await fetch("https://www.nonexistant.domain.com", {
-                method: "POST",
-                body: formData,
-                mode: "no-cors",
-            });
-            if (response.ok) {
-                code.innerHTML = "Your message was sent !";
-            } else {
-                throw new Error(response.statusText);
-            }
-        } catch (e: any) {
-            code.innerHTML = e.toString();
-        }
-    }
+	async function sendData() {
+		try {
+			const response = await fetch("https://www.nonexistant.domain.com", {
+				method: "POST",
+				body: formData,
+				mode: "no-cors",
+			});
+			if (response.ok) {
+				code.innerHTML = "Your message was sent !";
+			} else {
+				throw new Error(response.statusText);
+			}
+		} catch (e: any) {
+			code.innerHTML = e.toString();
+		}
+	}
 
-    form.onsubmit = (event) => {
-        event.preventDefault();
-        sendData();
-    };
+	form.onsubmit = (event) => {
+		event.preventDefault();
+		sendData();
+	};
 </script>
 
 <style>
-    form {
-        display: grid;
-        grid-template-columns: 3fr 2fr;
-        grid-template-rows: 1fr 1fr 4fr;
-        gap: 15px;
-        grid-template-areas:
-            "name button"
-            "email button"
-            "body body";
-    }
+	form {
+		display: grid;
+		grid-template-columns: 3fr 2fr;
+		grid-template-rows: 1fr 1fr 4fr;
+		gap: 15px;
+		grid-template-areas:
+			"name button"
+			"email button"
+			"body body";
+	}
 
-    textarea,
-    button,
-    input {
-        padding: 20px 30px;
-        border-radius: var(--border-radius);
-        border: none;
-        outline: none;
-        resize: none;
-        width: 100%;
-        height: 100%;
-        background-color: var(--primary-clr);
-        color: var(--background-clr);
-        font-size: 1em;
-        transition: all 0.3s;
-        font-family: var(--font-lexend);
-    }
+	textarea,
+	button,
+	input {
+		padding: 20px 30px;
+		border-radius: var(--border-radius);
+		border: none;
+		outline: none;
+		resize: none;
+		width: 100%;
+		height: 100%;
+		background-color: var(--primary-clr);
+		color: var(--background-clr);
+		font-size: 1em;
+		transition: all 0.3s;
+		font-family: var(--font-lexend);
+	}
 
-    textarea,
-    input {
-        border: 4px solid var(--background-clr);
-    }
+	textarea,
+	input {
+		border: 4px solid var(--background-clr);
+	}
 
-    div {
-        width: 100%;
-        position: relative;
-    }
+	div {
+		width: 100%;
+		position: relative;
+	}
 
-    div > label {
-        padding: 4px 10px;
-        background-color: var(--primary-clr-clr);
-        left: 30px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: var(--background-clr);
-        position: absolute;
-        transition: all 0.15s;
-        pointer-events: none;
-    }
+	div > label {
+		padding: 4px 10px;
+		background-color: var(--primary-clr-clr);
+		left: 30px;
+		top: 50%;
+		transform: translateY(-50%);
+		color: var(--background-clr);
+		position: absolute;
+		transition: all 0.15s;
+		pointer-events: none;
+	}
 
-    input.empty:not(:focus) + label,
-    textarea.empty:not(:focus) + label {
-        top: 50%;
-    }
+	input.empty:not(:focus) + label,
+	textarea.empty:not(:focus) + label {
+		top: 50%;
+	}
 
-    input:is(:focus, :not(.empty)) + label,
-    textarea:is(:focus, :not(.empty)) + label {
-        top: 0;
-        background-color: var(--primary-clr);
-    }
+	input:is(:focus, :not(.empty)) + label,
+	textarea:is(:focus, :not(.empty)) + label {
+		top: 0;
+		background-color: var(--primary-clr);
+	}
 
-    textarea:not(:invalid),
-    input:not(:invalid) {
-        border: 4px solid var(--accent-clr);
-    }
+	textarea:not(:invalid),
+	input:not(:invalid) {
+		border: 4px solid var(--accent-clr);
+	}
 
-    #form__name {
-        grid-area: name;
-    }
+	#form__name {
+		grid-area: name;
+	}
 
-    #form__email {
-        grid-area: email;
-    }
+	#form__email {
+		grid-area: email;
+	}
 
-    #form__message-body {
-        grid-area: body;
-    }
+	#form__message-body {
+		grid-area: body;
+	}
 
-    button {
-        grid-area: button;
-        position: relative;
-        overflow: hidden;
-        transition: 0.3s ease-in-out;
-    }
+	button {
+		grid-area: button;
+		position: relative;
+		overflow: hidden;
+		transition: 0.3s ease-in-out;
+	}
 
-    .form__button__content {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        font-size: 7.5vw;
-        font-weight: 600;
-        text-transform: uppercase;
-        z-index: 1;
-        left: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        transition: 0.3s ease-in-out;
-    }
+	.form__button__content {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		font-size: 7.5vw;
+		font-weight: 600;
+		text-transform: uppercase;
+		z-index: 1;
+		left: 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		transition: 0.3s ease-in-out;
+	}
 
-    .form__button__content:nth-child(1) {
-        top: 0;
-    }
+	.form__button__content:nth-child(1) {
+		top: 0;
+	}
 
-    .form__button__content:nth-child(2) {
-        top: 100%;
-    }
+	.form__button__content:nth-child(2) {
+		top: 100%;
+	}
 
-    form:invalid button {
-        background-color: transparent;
-        border: 4px solid var(--background-clr);
-        border-radius: var(--border-radius);
-    }
+	form:invalid button {
+		background-color: transparent;
+		border: 4px solid var(--background-clr);
+		border-radius: var(--border-radius);
+	}
 
-    form:not(:invalid) button {
-        color: var(--primary-clr);
-        background-color: var(--accent-clr);
-    }
+	form:not(:invalid) button {
+		color: var(--primary-clr);
+		background-color: var(--accent-clr);
+	}
 
-    form:not(:invalid) .form__button__content:nth-child(1) {
-        top: -100%;
-    }
+	form:not(:invalid) .form__button__content:nth-child(1) {
+		top: -100%;
+	}
 
-    form:not(:invalid) .form__button__content:nth-child(2) {
-        top: 0;
-    }
+	form:not(:invalid) .form__button__content:nth-child(2) {
+		top: 0;
+	}
 
-    /*
+	/*
 
     @media (max-width: 1440px) {
         .form__button__content {

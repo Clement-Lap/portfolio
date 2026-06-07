@@ -3,108 +3,112 @@ import { Image } from "astro:assets";
 import { type ISkillImage } from "../scripts/skill-card-imports";
 
 export interface Props {
-    title: string;
-    description: string;
-    images: ISkillImage[];
-    direction: Direction;
+	title: string;
+	description: string;
+	images: ISkillImage[];
+	direction: Direction;
 }
 
 export enum Direction {
-    vertical = "vertical",
-    horizontal = "horizontal",
+	vertical = "vertical",
+	horizontal = "horizontal",
 }
 
 const { title, description, images, direction = "vertical" } = Astro.props;
 ---
 
 <div class={`skill-card ${direction}`}>
-    <div class="skill-card__text">
-        <h3 class="highlighted">{title}</h3>
-        <p>{description}</p>
-    </div>
-    <div class="skill-card__images">
-        {
-            images
-                .sort((img1, img2) => (img1.highlight === img2.highlight ? 0 : img1.highlight ? -1 : 1))
-                // https://www.geeksforgeeks.org/javascript/sort-an-array-of-objects-using-boolean-property-in-javascript/
-                .map((img) => (
-                    <Image
-                        src={img.import}
-                        class={`${img.highlight ? "language-logo highlighted-logo" : "language-logo"}`}
-                        width={128}
-                        height={128}
-                        alt={img.alt}
-                    />
-                ))
-        }
-    </div>
+	<div class="skill-card__text">
+		<h3 class="highlighted">{title}</h3>
+		<p>{description}</p>
+	</div>
+	<div class="skill-card__images">
+		{
+			images
+				.sort((img1, img2) => (img1.highlight === img2.highlight ? 0 : img1.highlight ? -1 : 1))
+				// https://www.geeksforgeeks.org/javascript/sort-an-array-of-objects-using-boolean-property-in-javascript/
+				.map((img) => (
+					<Image
+						src={img.import}
+						class={`${img.highlight ? "language-logo highlighted-logo" : "language-logo"}`}
+						width={128}
+						height={128}
+						alt={img.alt}
+					/>
+				))
+		}
+	</div>
 </div>
 
 <style>
-    .skill-card {
-        display: flex;
-        padding: 16px;
-        gap: 20px;
-        border: 1px solid var(--accent-clr);
-        border-radius: var(--border-radius);
-        height: fit-content;
-    }
+	.skill-card {
+		display: flex;
+		padding: 16px;
+		gap: 20px;
+		border: 1px solid var(--accent-clr);
+		border-radius: var(--border-radius);
+		height: fit-content;
+		width: 100%;
+	}
 
-    .horizontal {
-        flex-direction: row;
-    }
+	.horizontal {
+		flex-direction: row;
+	}
 
-    .vertical {
-        flex-direction: column;
-    }
+	.vertical {
+		flex-direction: column;
+	}
 
-    .skill-card__text {
-    }
+	.skill-card__text {
+	}
 
-    .skill-card__text > h3,
-    .skill-card__text > p {
-        padding: 0;
-        margin: 0;
-    }
+	.skill-card__text > h3,
+	.skill-card__text > p {
+		padding: 0;
+		margin: 0;
+	}
 
-    .skill-card__images {
-        display: flex;
-        flex-wrap: wrap;
-        height: fit-content;
-        gap: 6px;
-    }
+	.skill-card__images {
+		display: flex;
+		flex-wrap: wrap;
+		height: fit-content;
+		gap: 6px;
+	}
 
-    .skill-card:nth-child(1) {
-        grid-area: frontend;
-    }
+	.skill-card:nth-child(1) {
+		grid-area: frontend;
+	}
 
-    .skill-card:nth-child(2) {
-        grid-area: backend;
-    }
+	.skill-card:nth-child(2) {
+		grid-area: backend;
+	}
 
-    .skill-card:nth-child(3) {
-        grid-area: software;
-    }
+	.skill-card:nth-child(3) {
+		grid-area: software;
+	}
 
-    .skill-card:nth-child(4) {
-        grid-area: tools;
-    }
+	.skill-card:nth-child(4) {
+		grid-area: tools;
+	}
 
-    .skill-card__images > img {
-        padding: 6px;
-        flex: 1 1 0%;
-        min-width: 51px;
-        max-width: 64px;
-        object-fit: cover;
-        height: auto;
-        aspect-ratio: 1;
-        border-radius: var(--border-radius);
-    }
+	.skill-card__images > img {
+		padding: 6px;
+		flex: 1 1 0%;
+		min-width: 51px;
+		max-width: 64px;
+		object-fit: cover;
+		height: auto;
+		aspect-ratio: 1;
+		border-radius: var(--border-radius);
+	}
 
-    .highlighted-logo {
-        background-color: var(--accent-clr);
-    }
+	.highlighted-logo {
+		background-color: var(--accent-clr);
+	}
 
-    @media (max-width: 1280px) and (min-width: 960px) {
-    }
+	@media (max-width: 1280px) {
+		.horizontal {
+			flex-direction: column;
+		}
+	}
 </style>
