@@ -1,0 +1,285 @@
+---
+import Layout from "#layouts/layout.astro";
+import Carousel from "#components/en/carousel.astro";
+import SkillCards, { Direction } from "#components/en/skill-cards.astro";
+import { SkillImages } from "#utils/skill-card-imports.ts";
+import TimelineElement from "#components/en/timeline-element.astro";
+import ContactForm from "#components/en/contact-form.astro";
+import ScrollDownArrowImage from "#images/other/scroll-down-arrow.astro";
+import Tree from "#images/other/tree.astro";
+import { Image } from "astro:assets";
+---
+
+<Layout lang="en" title="home">
+	<section id="landing">
+		<div id="landing-text">
+			<div id="landing-text__name">
+				<h1>I'm <span class="highlighted">Clément Laporte</span>.</h1>
+			</div>
+			<div id="landing-text__context">
+				<h2>
+					A <span class="bold underlined">France</span> based developer & &#20;
+					<span class="bold underlined">student</span>,
+					<br />
+					Specialized in <span class="bold">web</span> and <span class="bold">software</span> development.
+				</h2>
+			</div>
+		</div>
+		<Carousel />
+	</section>
+	<section id="scroll-down">
+		<ScrollDownArrowImage />
+	</section>
+	<section id="my-skills">
+		<div id="my-skills__title">
+			<h1>My <span class="highlighted">tech stack</span></h1>
+		</div>
+		<div id="my-skills__cards">
+			<SkillCards
+				title="Front-end"
+				description="The stack I mainly use in the process for the front-end part of websites, including frameworks, preprocessors and libraries."
+				images={[
+					SkillImages.html,
+					SkillImages.css,
+					SkillImages.jsts,
+					SkillImages.vuejs,
+					SkillImages.angular,
+					SkillImages.astro,
+					SkillImages.gsap,
+					SkillImages.vite,
+					SkillImages.react,
+					SkillImages.pcss,
+					SkillImages.svelt,
+				]}
+				direction={Direction.vertical}
+			/>
+			<SkillCards
+				title="Back-end"
+				description="The technology I work with for my projects requiring a backend. I usually develop REST API, but also sometimes service worker or microservices."
+				images={[
+					SkillImages.node,
+					SkillImages.nest,
+					SkillImages.python,
+					SkillImages.cSharp,
+					SkillImages.go,
+					SkillImages.springboot,
+				]}
+				direction={Direction.vertical}
+			/>
+			<SkillCards
+				title="Software"
+				description="My go-to programming languages and API to develop (mainly desktop) applications or firmware."
+				images={[
+					SkillImages.qt,
+					SkillImages.gtk,
+					SkillImages.rust,
+					SkillImages.cpp,
+					SkillImages.c,
+					SkillImages.electron,
+					SkillImages.cSharp,
+				]}
+				direction={Direction.vertical}
+			/>
+			<SkillCards
+				title="Tools"
+				description="Tools I use in the process in my projects. I have a wide range of abilities in them. While not being an expert, I can use them efficiently."
+				images={[
+					SkillImages.arch,
+					SkillImages.windows,
+					SkillImages.zed,
+					SkillImages.jetbrains,
+					SkillImages.github,
+					SkillImages.figma,
+					SkillImages.blender,
+				]}
+				direction={Direction.horizontal}
+			/>
+		</div>
+	</section>
+	<section id="timeline">
+		<div id="timeline__title">
+			<h1>My <span class="highlighted">timeline</span></h1>
+		</div>
+		<div id="timeline__timeline-elements">
+			<Tree />
+			<TimelineElement
+				title="2026 - Present"
+				description={[
+					"Learn Go, Zig, Assembly.",
+					"Improve Rust & Rest API knowledge.",
+					"Create my own taskbar for Hyprland.",
+					"Contribute to open source projects.",
+				]}
+			/>
+			<TimelineElement
+				title="2025"
+				description={[
+					"Implement the Game of Life in C.",
+					"Enroll in Electrical Engineering and Computer Science university course.",
+					"Created the pong game in Javascript using canva.",
+					"Learn Rust",
+				]}
+			/>
+			<TimelineElement
+				title="2024"
+				description={[
+					"Created a C++ library to make CLIs.",
+					"Wrote an unfinished book on Python.",
+					"Created small temporary websites.",
+				]}
+			/>
+			<TimelineElement
+				}
+				title="Past"
+				description={[
+					"Learned Python, Javascript, CSS and HTML.",
+					"Created a website for the discord bot in VueJS.",
+					"Created a moderation discord bot, which I abandoned after it reached 100 servers.",
+				]}
+			/>
+		</div>
+	</section>
+	<section id="contact-me">
+		<div id="contact-me__title">
+			<h1><span class="highlighted">Contact</span> me</h1>
+		</div>
+		<ContactForm />
+	</section>
+</Layout>
+
+<style>
+	@layer layout {
+		section:not(#landing) {
+			padding: 40px 20%;
+		}
+
+		#landing {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			align-items: center;
+			overflow: hidden;
+		}
+
+		#scroll-down {
+			display: flex;
+		}
+
+		#scroll-down__image {
+			width: 64px;
+			margin: auto;
+			animation-name: Bounce;
+			animation-duration: 1s;
+			animation-iteration-count: infinite;
+			animation-direction: alternate;
+			animation-timing-function: ease-in;
+		}
+
+		#my-skills {
+			display: flex;
+			flex-direction: column;
+			gap: 2em;
+		}
+
+		#my-skills > #my-skills__cards {
+			justify-items: center;
+			display: grid;
+			gap: 22px;
+			grid-template-columns: repeat(3, 1fr);
+			grid-template-areas:
+				"frontend backend software"
+				"tools tools .";
+		}
+
+		#timeline {
+			margin-bottom: -60px !important;
+			padding-bottom: 0 !important ;
+			width: 100%;
+		}
+
+		#timeline__timeline-elements {
+			position: relative;
+			height: fit-content;
+			width: 100%;
+		}
+
+		#contact-me {
+			padding-top: 10em;
+			display: flex;
+			flex-direction: column;
+			gap: 2em;
+			background-color: var(--primary-clr);
+		}
+
+		@media (width < 1280px) {
+			#landing {
+				grid-template-columns: 1fr;
+				grid-template-rows: 1fr 3fr;
+			}
+
+			#landing-text__name > h1 {
+				font-size: 7vw;
+			}
+
+			#my-skills > #my-skills__cards {
+				grid-template-columns: repeat(2, 1fr);
+				grid-template-areas:
+					"frontend backend"
+					"software tools";
+			}
+		}
+
+		@media (width < 740px) {
+			#landing {
+				display: flex;
+				gap: 4em;
+				padding-top: 4em;
+				flex-direction: column;
+			}
+
+			#landing-text__context > h2 > br {
+				display: none;
+			}
+
+			#landing-text__name {
+				text-align: center;
+			}
+
+			#landing-text__name > h1:not(span) {
+				font-size: 10vw;
+			}
+
+			#landing-text__name > h1 > span {
+				font-size: 15vw;
+			}
+
+			#my-skills > #my-skills__cards {
+				grid-template-columns: 1fr;
+				grid-template-areas:
+					"frontend"
+					"backend"
+					"software"
+					"tools";
+			}
+
+			#landing,
+			section:not(#landing) {
+				padding: 5vw;
+			}
+		}
+	}
+
+	@layer styling {
+		#contact-me__title > h1 {
+			color: var(--background-clr);
+		}
+
+		@keyframes Bounce {
+			from {
+				transform: translateY(0);
+			}
+			to {
+				transform: translateY(14px);
+			}
+		}
+	}
+</style>

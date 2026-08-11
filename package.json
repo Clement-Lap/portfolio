@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "deno run -A --unstable npm:astro dev",
     "start": "deno run -A --unstable npm:astro dev",
-    "build": "astro build"
+    "build": "astro build",
+    "test": "deno run -A npm:vitest"
   },
   "keywords": [],
   "author": "",
@@ -18,8 +19,19 @@
       "onFail": "download"
     }
   },
+  "imports": {
+   "#styles/*": "./src/styles/*",
+   "#components/*": "./src/components/*",
+   "#pages/*": "./src/pages/*",
+   "#layouts/*": "./src/layouts/*",
+   "#images/*": "./src/images/*",
+   "#utils/*": "./src/utils/*",
+   "#scripts/*": "./src/scripts/*"
+  },
   "type": "module",
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
+    "@vitest/ui": "^4.1.10",
     "astro": "^7.1.6",
     "autoprefixer": "^10.5.4",
     "cssnano": "^8.0.3",

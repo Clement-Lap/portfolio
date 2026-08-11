@@ -1,0 +1,41 @@
+---
+import styles from "#styles/components/footer.module.pcss";
+import HeaderParts from "./footer-parts.astro";
+---
+
+<footer class={styles.footer}>
+	<HeaderParts title="Copyrights">
+		<p class={styles["footer__text"]}>
+			&COPY; 2026 LAPORTE Clément.<br />All rights reserved.
+		</p>
+	</HeaderParts>
+	<HeaderParts title="Website">
+		<p class={styles["footer__text"]}>
+			The whole website, design, pictures / images (except the weather icons), and code by me. NO AI.
+		</p>
+		<a class={styles["footer__link"]} target="_blank" rel="noopener noreferrer" href="#">Sitemap</a>
+		<a class={styles["footer__link"]} target="_blank" rel="noopener noreferrer" href="#">Github repo</a>
+	</HeaderParts>
+	<HeaderParts title="External content">
+		<a class={styles["footer__link"]} target="_blank" rel="noopener noreferrer" href="https://www.weatherapi.com/"
+			>Weather & Time API</a
+		>
+	</HeaderParts>
+	<HeaderParts title="Links">
+		<a
+			class={styles["footer__link"]}
+			target="_blank"
+			rel="noopener noreferrer"
+			href="https://www.github.com/Clement-Lap">Github.com</a
+		>
+		<a class={styles["footer__link"]} target="_blank" rel="noopener noreferrer" href="https://codeberg.org/clems-lap"
+			>Codeberg.org</a
+		>
+		<a
+			class={styles["footer__link"]}
+			target="_blank"
+			rel="noopener noreferrer"
+			href="https://www.linkedin.com/clement-lap">Linkedin</a
+		>
+	</HeaderParts>
+</footer>

@@ -1,0 +1,18 @@
+---
+import styles from "#styles/components/footer-parts.module.pcss";
+
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<div class={styles["footer-element"]}>
+	<div class={styles["footer-element--title"]}>
+		<h6 class={styles["footer-element__title-text"]}>{title}</h6>
+	</div>
+	<div class={styles["footer-element--content"]}>
+		<slot />
+	</div>
+</div>

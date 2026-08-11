@@ -1,0 +1,73 @@
+.header {
+	--header-height: max(5.8vh, 38px);
+	position: sticky;
+	top: 10px;
+	right: 5vw;
+	left: 5vw;
+	z-index: 1000;
+	display: grid;
+	grid-template-columns: 2fr 5fr 2fr;
+	gap: 10vw;
+	align-items: center;
+	justify-items: center;
+	height: var(--header-height);
+	padding: 0 5vw;
+	align-items: flex-start;
+}
+
+.header > div {
+	width: 100%;
+}
+
+.interactions,
+.france-data {
+	display: flex;
+	padding: 1vh 0;
+	height: 100%;
+	border-radius: var(--border-radius);
+}
+
+.language,
+.theme {
+	text-align: center;
+	flex-grow: 1;
+	border-radius: var(--border-radius);
+	border: none;
+	background-color: var(--primary-clr);
+	color: var(--background-clr);
+	outline: 2px solid var(--background-clr);
+}
+
+.interactions {
+	align-self: flex-end;
+	flex-direction: row;
+	gap: 10%;
+}
+
+.france-data {
+	align-self: flex-start;
+	flex-direction: column;
+}
+
+.links {
+	outline: 2px solid var(--background-clr);
+	align-self: center;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	background-color: var(--primary-clr);
+	border-radius: var(--border-radius);
+	padding: 0.7vh;
+}
+
+.links > .links__link {
+	color: var(--secondary-clr);
+	width: 100%;
+	text-align: center;
+	border-radius: calc(var(--border-radius) - 0.7vh);
+	padding-top: calc((var(--header-height) - 0.7vh * 2 - 1em) / 2); /* dont ask me why 0.707 */
+	padding-bottom: calc((var(--header-height) - 0.7vh * 2 - 1em) / 2); /* same magic */
+	line-height: 1em;
+	transition:
+		background-color 0.3s,
+		color 0.3s;
+}

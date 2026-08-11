@@ -1,0 +1,58 @@
+---
+import styles from "#styles/components/carousel.module.pcss";
+import { Image } from "astro:assets";
+import AngryClem from "#images/clem/angry-clem.png";
+import ClemNCat from "#images/clem/clem-n-cat.png";
+import DumbCat from "#images/clem/dumb-cat.png";
+import EvilCat from "#images/clem/evil-cat.png";
+import GloriousCat from "#images/clem/glorious-cat.png";
+---
+
+<div class={styles.carousel} data-carousel>
+	<div class={styles.carousel__wrapper} data-carousel-wrapper>
+		<Image
+			src={AngryClem}
+			data-carousel-image="1"
+			alt="Little me but angry"
+			draggable="false"
+			width={400}
+			data-description='I was at the beach with my family doing a "sandball" fight, when my brother hid a rock inside the ball (it hurt).'
+		/>
+		<Image
+			src={ClemNCat}
+			data-carousel-image="2"
+			alt="Me holding a long cat"
+			draggable="false"
+			width={400}
+			data-description="Me and my former cat, Helis (Norwegian Forest cat breed)."
+		/>
+		<Image
+			src={DumbCat}
+			data-carousel-image="3"
+			alt="My dumb cat"
+			draggable="false"
+			width={400}
+			data-description="My other cat, called Gazor-pazor-field, a reference to Rick and Morty (he's very fat and dumb)."
+		/>
+		<Image
+			src={EvilCat}
+			data-carousel-image="4"
+			alt="My evil cat"
+			draggable="false"
+			width={400}
+			data-description='My current cat, called Plume (French for "feather") because she is tiny and lightweight.'
+		/>
+		<Image
+			src={GloriousCat}
+			data-carousel-image="5"
+			alt="My cat looking like Batman"
+			draggable="false"
+			width={400}
+			data-description="She likes to go on my window to fight the crime in her city (watch for birds in the garden)."
+		/>
+		<button class={styles.rewind} data-carousel-rewind>Rewind</button>
+	</div>
+	<p class={styles["img-description"]} data-carousel-description></p>
+</div>
+
+<script type="module" src="/src/scripts/carousel.ts"></script>

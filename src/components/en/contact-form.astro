@@ -1,0 +1,25 @@
+---
+import styles from "#styles/components/contact-form.module.pcss";
+---
+
+<form class={styles.form}>
+	<div class={styles["form__name"]}>
+		<input id="name" name="name" class={`empty ${styles.input}`} minlength="3" required />
+		<label class={styles.label} for="name">Name</label>
+	</div>
+	<div class={styles["form__email"]}>
+		<input id="email" name="email" class={`empty ${styles.input}`} type="email" required />
+		<label class={styles.label} for="email">Email</label>
+	</div>
+	<div class={styles["form__message-body"]}>
+		<textarea id="body" minlength="30" class={`empty ${styles.textarea}`} name="body" required></textarea>
+		<label class={styles.label} for="body">Message</label>
+	</div>
+	<button class={styles.button} type="submit">
+		<div class={styles["form__button__content"]}>fill</div>
+		<div class={styles["form__button__content"]}>send</div>
+	</button>
+</form>
+<code id="result"></code>
+
+<script type="module" src="/src/scripts/contact-form.ts"></script>

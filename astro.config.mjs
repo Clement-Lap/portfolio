@@ -1,8 +1,18 @@
 // @ts-check
 import { defineConfig, fontProviders } from "astro/config";
 
+import sitemap from "@astrojs/sitemap";
+
 // https://astro.build/config
 export default defineConfig({
+ 	i18n: {
+    locales: ["fr", "en"],
+		defaultLocale: "en",
+		routing : {
+			prefixDefaultLocale: true,
+			redirectToDefaultLocale: true
+  	}
+ 	},
   fonts: [
     {
       provider: fontProviders.fontsource(),
@@ -25,4 +35,6 @@ export default defineConfig({
       fallbacks: ["serif"],
     },
   ],
+
+  integrations: [sitemap()],
 });
