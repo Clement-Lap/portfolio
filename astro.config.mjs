@@ -34,7 +34,12 @@ export default defineConfig({
       cssVariable: "--font-akaya",
       fallbacks: ["serif"],
     },
-  ],
+	],
+	vite: {
+		build: {
+			cssMinify: "esbuild", // "lightningcss" not compatible with deno sadly
+		}
+	},
 
   integrations: [sitemap()],
 });
