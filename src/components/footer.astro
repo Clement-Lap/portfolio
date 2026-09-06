@@ -1,57 +1,9 @@
 ---
-import HeaderParts from "./footer-parts.astro";
+import styles from "@styles/components/footer.module.pcss";
+import HeaderParts from "@components/footer-parts.astro";
+import translator, { type LangType } from "@i18n/translations";
 ---
 
-<footer>
-	<HeaderParts title="Copyrights">
-		<p>
-			&COPY; 2026 LAPORTE Clément.<br />All rights reserved.
-		</p>
-	</HeaderParts>
-	<HeaderParts title="Website">
-		<p>The whole website, design, pictures / images (except the weather icons), and code by me. NO AI.</p>
-		<a target="_blank" rel="noopener noreferrer" href="#">Sitemap</a>
-		<a target="_blank" rel="noopener noreferrer" href="#">Github repo</a>
-	</HeaderParts>
-	<HeaderParts title="External content">
-		<a target="_blank" rel="noopener noreferrer" href="https://www.weatherapi.com/">Weather & Time API</a>
-	</HeaderParts>
-	<HeaderParts title="Links">
-		<a target="_blank" rel="noopener noreferrer" href="https://www.github.com/Clement-Lap">Github.com</a>
-		<a target="_blank" rel="noopener noreferrer" href="https://codeberg.org/clems-lap">Codeberg.org</a>
-		<a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/clement-lap">Linkedin</a>
-	</HeaderParts>
+<footer class={styles.footer}>
+	<slot />
 </footer>
-
-<style scoped>
-	footer {
-		display: grid;
-		grid-template-columns: repeat(4, 1fr);
-		padding: 12.5% 10%;
-		gap: 3em;
-		background-color: var(--primary-clr);
-		width: 100%;
-	}
-
-	a,
-	p {
-		font-size: 0.8em;
-		opacity: 0.7;
-	}
-
-	p {
-		color: var(--background-clr) !important;
-	}
-
-	a {
-		color: var(--accent-clr);
-		text-decoration: underline;
-	}
-
-	@media (width < 720px) {
-		footer {
-			grid-template-columns: 1fr;
-			grid-template-rows: auto;
-		}
-	}
-</style>

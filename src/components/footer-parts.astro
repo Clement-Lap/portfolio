@@ -1,37 +1,28 @@
 ---
+import styles from "@styles/components/footer-parts.module.pcss";
+
 interface Props {
 	title: string;
+	descriptions?: string[];
+	links?: {
+		href: string;
+		text: string;
+	}[];
 }
 
-const { title } = Astro.props;
+const { title, descriptions, links } = Astro.props;
 ---
 
-<div class="footer-element">
-	<div class="footer-element--title">
-		<h6 class="bold">{title}</h6>
-	</div>
-	<div class="footer-element--content">
-		<slot />
+<div class={styles["footer-element"]}>
+	<h6 class={styles["footer-element__title"]}>{title}</h6>
+	<div class={styles["footer-element__content"]}>
+		{descriptions?.map((description) => <p class={styles["footer__text"]}>{description}</p>)}
+		{
+			links?.map((link) => (
+				<a class={styles["footer__link"]} target="_blank" rel="noopener noreferrer" href={link.href}>
+					{link.text}
+				</a>
+			))
+		}
 	</div>
 </div>
-
-<style>
-	.footer-element {
-		align-items: start;
-		text-align: start;
-		gap: 1em;
-		color: var(--background-clr) !important;
-	}
-
-	.bold {
-		color: var(--background-clr) !important;
-	}
-
-	.footer-element,
-	.footer-element--content {
-		color: var(--background-clr) !important;
-		display: flex;
-		color: var(--background-clr) !important;
-		flex-direction: column;
-	}
-</style>

@@ -32,44 +32,64 @@ import vite from "../images/languages/vite.png";
 import windows from "../images/languages/windows.png";
 
 interface ISkillImage {
-	import: ImageMetadata;
-	highlight: boolean;
-	alt: string;
+  import: ImageMetadata;
+  highlight: boolean;
+  alt: string;
 }
 
 const SkillImages = {
-	angular: { import: angular, highlight: false, alt: "Angular" } as ISkillImage,
-	blender: { import: blender, highlight: false, alt: "Blender" } as ISkillImage,
-	c: { import: c, highlight: true, alt: "C" } as ISkillImage,
-	cpp: { import: cpp, highlight: true, alt: "C++" } as ISkillImage,
-	rust: { import: rust, highlight: true, alt: "Rust" } as ISkillImage,
-	astro: { import: astro, highlight: true, alt: "Astro" } as ISkillImage,
-	arch: { import: arch, highlight: false, alt: "Arch Linux" } as ISkillImage,
-	kitty: { import: kitty, highlight: false, alt: "Kitty Terminal" } as ISkillImage,
-	nest: { import: nest, highlight: true, alt: "NestJS" } as ISkillImage,
-	zed: { import: zed, highlight: false, alt: "Zed Text Editor" } as ISkillImage,
-	figma: { import: figma, highlight: true, alt: "Figma" } as ISkillImage,
-	gsap: { import: gsap, highlight: false, alt: "GSAP" } as ISkillImage,
-	jetbrains: { import: jetbrains, highlight: false, alt: "JetBrains" } as ISkillImage,
-	qt: { import: qt, highlight: false, alt: "Qt" } as ISkillImage,
-	springboot: { import: springboot, highlight: false, alt: "Spring Boot" } as ISkillImage,
-	vscode: { import: vscode, highlight: false, alt: "VS Code" } as ISkillImage,
-	cSharp: { import: cSharp, highlight: false, alt: "C#" } as ISkillImage,
-	css: { import: css, highlight: true, alt: "CSS" } as ISkillImage,
-	github: { import: github, highlight: false, alt: "GitHub" } as ISkillImage,
-	gtk: { import: gtk, highlight: false, alt: "GTK" } as ISkillImage,
-	jsts: { import: jsts, highlight: true, alt: "JavaScript & TypeScript" } as ISkillImage,
-	python: { import: python, highlight: true, alt: "Python" } as ISkillImage,
-	node: { import: node, highlight: true, alt: "Node.js" } as ISkillImage,
-	react: { import: react, highlight: false, alt: "React" } as ISkillImage,
-	svelt: { import: svelt, highlight: false, alt: "Svelte" } as ISkillImage,
-	vuejs: { import: vuejs, highlight: true, alt: "Vue.js" } as ISkillImage,
-	electron: { import: electron, highlight: false, alt: "Electron" } as ISkillImage,
-	go: { import: go, highlight: false, alt: "Go" } as ISkillImage,
-	html: { import: html, highlight: true, alt: "HTML" } as ISkillImage,
-	pcss: { import: pcss, highlight: true, alt: "PostCSS" } as ISkillImage,
-	vite: { import: vite, highlight: true, alt: "Vite" } as ISkillImage,
-	windows: { import: windows, highlight: false, alt: "Windows" } as ISkillImage,
+  angular: { import: angular, highlight: false, alt: "Angular" } as ISkillImage,
+  blender: { import: blender, highlight: false, alt: "Blender" } as ISkillImage,
+  c: { import: c, highlight: true, alt: "C" } as ISkillImage,
+  cpp: { import: cpp, highlight: true, alt: "C++" } as ISkillImage,
+  rust: { import: rust, highlight: true, alt: "Rust" } as ISkillImage,
+  astro: { import: astro, highlight: true, alt: "Astro" } as ISkillImage,
+  arch: { import: arch, highlight: false, alt: "Arch Linux" } as ISkillImage,
+  kitty: {
+    import: kitty,
+    highlight: false,
+    alt: "Kitty Terminal",
+  } as ISkillImage,
+  nest: { import: nest, highlight: true, alt: "NestJS" } as ISkillImage,
+  zed: { import: zed, highlight: false, alt: "Zed Text Editor" } as ISkillImage,
+  figma: { import: figma, highlight: true, alt: "Figma" } as ISkillImage,
+  gsap: { import: gsap, highlight: false, alt: "GSAP" } as ISkillImage,
+  jetbrains: {
+    import: jetbrains,
+    highlight: false,
+    alt: "JetBrains",
+  } as ISkillImage,
+  qt: { import: qt, highlight: false, alt: "Qt" } as ISkillImage,
+  springboot: {
+    import: springboot,
+    highlight: false,
+    alt: "Spring Boot",
+  } as ISkillImage,
+  vscode: { import: vscode, highlight: false, alt: "VS Code" } as ISkillImage,
+  cSharp: { import: cSharp, highlight: false, alt: "C#" } as ISkillImage,
+  css: { import: css, highlight: true, alt: "CSS" } as ISkillImage,
+  github: { import: github, highlight: false, alt: "GitHub" } as ISkillImage,
+  gtk: { import: gtk, highlight: false, alt: "GTK" } as ISkillImage,
+  jsts: {
+    import: jsts,
+    highlight: true,
+    alt: "JavaScript & TypeScript",
+  } as ISkillImage,
+  python: { import: python, highlight: true, alt: "Python" } as ISkillImage,
+  node: { import: node, highlight: true, alt: "Node.js" } as ISkillImage,
+  react: { import: react, highlight: false, alt: "React" } as ISkillImage,
+  svelt: { import: svelt, highlight: false, alt: "Svelte" } as ISkillImage,
+  vuejs: { import: vuejs, highlight: true, alt: "Vue.js" } as ISkillImage,
+  electron: {
+    import: electron,
+    highlight: false,
+    alt: "Electron",
+  } as ISkillImage,
+  go: { import: go, highlight: false, alt: "Go" } as ISkillImage,
+  html: { import: html, highlight: true, alt: "HTML" } as ISkillImage,
+  pcss: { import: pcss, highlight: true, alt: "PostCSS" } as ISkillImage,
+  vite: { import: vite, highlight: true, alt: "Vite" } as ISkillImage,
+  windows: { import: windows, highlight: false, alt: "Windows" } as ISkillImage,
 };
 
 export { type ISkillImage, SkillImages };

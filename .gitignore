@@ -24,3 +24,7 @@ pnpm-debug.log*
 .idea/
 .astro/
 .vscode/
+
+# .lock
+*.lock
+pnpm-lock.yaml

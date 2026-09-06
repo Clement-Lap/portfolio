@@ -1,13 +1,18 @@
 ---
-import Layout from "#layouts/layout.astro";
-import Carousel from "#components/en/carousel.astro";
-import SkillCards, { Direction } from "#components/en/skill-cards.astro";
-import { SkillImages } from "#utils/skill-card-imports.ts";
-import TimelineElement from "#components/en/timeline-element.astro";
-import ContactForm from "#components/en/contact-form.astro";
-import ScrollDownArrowImage from "#images/other/scroll-down-arrow.astro";
-import Tree from "#images/other/tree.astro";
-import { Image } from "astro:assets";
+import Layout from "@layouts/en/layout.astro";
+import Carousel from "@components/carousel.astro";
+import SkillCards, { Direction } from "@components/skill-cards.astro";
+import { SkillImages } from "@utils/skill-card-imports.ts";
+import TimelineElement from "@components/timeline-element.astro";
+import ContactForm from "@components/contact-form.astro";
+import ScrollDownArrowImage from "@images/other/scroll-down-arrow.astro";
+import Tree from "@images/other/tree.astro";
+
+import AngryClem from "@images/clem/angry-clem.png";
+import ClemNCat from "@images/clem/clem-n-cat.png";
+import DumbCat from "@images/clem/dumb-cat.png";
+import EvilCat from "@images/clem/evil-cat.png";
+import GloriousCat from "@images/clem/glorious-cat.png";
 ---
 
 <Layout lang="en" title="home">
@@ -25,7 +30,38 @@ import { Image } from "astro:assets";
 				</h2>
 			</div>
 		</div>
-		<Carousel />
+		<Carousel
+			data={[
+				{
+					src: AngryClem,
+					alt: "Little me but angry",
+					description:
+						'I was at the beach with my family doing a "sandball" (snowball with sand instead) fight, when my brother hid a rock inside the ball (it hurt).',
+				},
+				{
+					src: ClemNCat,
+					alt: "Me holding a long cat",
+					description: "Me and my previous cat, Helis (Norwegian Forest cat breed).",
+				},
+				{
+					src: DumbCat,
+					alt: "My dumb cat",
+					description:
+						"My other cat, called Gazor-pazor-field, a reference to Rick and Morty (he's very fat and dumb).",
+				},
+				{
+					src: EvilCat,
+					alt: "My evil cat",
+					description: 'My current cat, called Plume (French for "feather") because she is tiny and lightweight.',
+				},
+				{
+					src: GloriousCat,
+					alt: "My cat looking like Batman",
+					description: "She likes to go on my window to fight the crime in her city (watch for birds in the garden).",
+				},
+			]}
+			rewindButtonText="Rewind"
+		/>
 	</section>
 	<section id="scroll-down">
 		<ScrollDownArrowImage />
@@ -105,25 +141,26 @@ import { Image } from "astro:assets";
 			<TimelineElement
 				title="2026 - Present"
 				description={[
-					"Learn Go, Zig, Assembly.",
-					"Improve Rust & Rest API knowledge.",
-					"Create my own taskbar for Hyprland.",
-					"Contribute to open source projects.",
+					"I will try to: ",
+					"- Learn Go, Zig and Assembly",
+					"- Improve Rust knowledge",
+					"- Create my own taskbar for Hyprland",
+					"- Contribute to open source projects",
 				]}
 			/>
 			<TimelineElement
 				title="2025"
 				description={[
-					"Implement the Game of Life in C.",
+					"Implemented the Game of Life in C.",
 					"Enroll in Electrical Engineering and Computer Science university course.",
-					"Created the pong game in Javascript using canva.",
-					"Learn Rust",
+					"Created the pong game in Vanilla Javascript using canvas.",
+					"Learned Rust",
 				]}
 			/>
 			<TimelineElement
 				title="2024"
 				description={[
-					"Created a C++ library to make CLIs.",
+					"Learned C++ and created a library to make CLIs.",
 					"Wrote an unfinished book on Python.",
 					"Created small temporary websites.",
 				]}
@@ -143,143 +180,116 @@ import { Image } from "astro:assets";
 		<div id="contact-me__title">
 			<h1><span class="highlighted">Contact</span> me</h1>
 		</div>
-		<ContactForm />
+		<ContactForm nameLabel="name" fillLabel="fill" sendLabel="send" />
 	</section>
 </Layout>
 
 <style>
-	@layer layout {
-		section:not(#landing) {
-			padding: 40px 20%;
-		}
+	section:not(#landing) {
+		padding: 40px 20%;
+	}
 
+	#landing {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		align-items: center;
+		overflow: hidden;
+	}
+
+	#scroll-down {
+		display: flex;
+	}
+
+	#my-skills {
+		display: flex;
+		flex-direction: column;
+		gap: 2em;
+	}
+
+	#my-skills > #my-skills__cards {
+		justify-items: center;
+		display: grid;
+		gap: 22px;
+		grid-template-columns: repeat(3, 1fr);
+		grid-template-areas:
+			"frontend backend software"
+			"tools tools .";
+	}
+
+	#timeline {
+		margin-bottom: -60px !important;
+		padding-bottom: 0 !important ;
+		width: 100%;
+	}
+
+	#timeline__timeline-elements {
+		position: relative;
+		height: fit-content;
+		width: 100%;
+	}
+
+	#contact-me {
+		padding-top: 10em;
+		display: flex;
+		flex-direction: column;
+		gap: 2em;
+		background-color: var(--primary-clr);
+	}
+
+	@media (width < 1280px) {
 		#landing {
-			display: grid;
-			grid-template-columns: repeat(2, 1fr);
-			align-items: center;
-			overflow: hidden;
+			grid-template-columns: 1fr;
+			grid-template-rows: 1fr 3fr;
 		}
 
-		#scroll-down {
-			display: flex;
-		}
-
-		#scroll-down__image {
-			width: 64px;
-			margin: auto;
-			animation-name: Bounce;
-			animation-duration: 1s;
-			animation-iteration-count: infinite;
-			animation-direction: alternate;
-			animation-timing-function: ease-in;
-		}
-
-		#my-skills {
-			display: flex;
-			flex-direction: column;
-			gap: 2em;
+		#landing-text__name > h1 {
+			font-size: 7vw;
 		}
 
 		#my-skills > #my-skills__cards {
-			justify-items: center;
-			display: grid;
-			gap: 22px;
-			grid-template-columns: repeat(3, 1fr);
+			grid-template-columns: repeat(2, 1fr);
 			grid-template-areas:
-				"frontend backend software"
-				"tools tools .";
-		}
-
-		#timeline {
-			margin-bottom: -60px !important;
-			padding-bottom: 0 !important ;
-			width: 100%;
-		}
-
-		#timeline__timeline-elements {
-			position: relative;
-			height: fit-content;
-			width: 100%;
-		}
-
-		#contact-me {
-			padding-top: 10em;
-			display: flex;
-			flex-direction: column;
-			gap: 2em;
-			background-color: var(--primary-clr);
-		}
-
-		@media (width < 1280px) {
-			#landing {
-				grid-template-columns: 1fr;
-				grid-template-rows: 1fr 3fr;
-			}
-
-			#landing-text__name > h1 {
-				font-size: 7vw;
-			}
-
-			#my-skills > #my-skills__cards {
-				grid-template-columns: repeat(2, 1fr);
-				grid-template-areas:
-					"frontend backend"
-					"software tools";
-			}
-		}
-
-		@media (width < 740px) {
-			#landing {
-				display: flex;
-				gap: 4em;
-				padding-top: 4em;
-				flex-direction: column;
-			}
-
-			#landing-text__context > h2 > br {
-				display: none;
-			}
-
-			#landing-text__name {
-				text-align: center;
-			}
-
-			#landing-text__name > h1:not(span) {
-				font-size: 10vw;
-			}
-
-			#landing-text__name > h1 > span {
-				font-size: 15vw;
-			}
-
-			#my-skills > #my-skills__cards {
-				grid-template-columns: 1fr;
-				grid-template-areas:
-					"frontend"
-					"backend"
-					"software"
-					"tools";
-			}
-
-			#landing,
-			section:not(#landing) {
-				padding: 5vw;
-			}
+				"frontend backend"
+				"software tools";
 		}
 	}
 
-	@layer styling {
-		#contact-me__title > h1 {
-			color: var(--background-clr);
+	@media (width < 740px) {
+		#landing {
+			display: flex;
+			gap: 4em;
+			padding-top: 4em;
+			flex-direction: column;
 		}
 
-		@keyframes Bounce {
-			from {
-				transform: translateY(0);
-			}
-			to {
-				transform: translateY(14px);
-			}
+		#landing-text__context > h2 > br {
+			display: none;
+		}
+
+		#landing-text__name {
+			text-align: center;
+		}
+
+		#landing-text__name > h1:not(span) {
+			font-size: 10vw;
+		}
+
+		#landing-text__name > h1 > span {
+			font-size: 15vw;
+		}
+
+		#my-skills > #my-skills__cards {
+			grid-template-columns: 1fr;
+			grid-template-areas:
+				"frontend"
+				"backend"
+				"software"
+				"tools";
+		}
+
+		#landing,
+		section:not(#landing) {
+			padding: 5vw;
 		}
 	}
 </style>
