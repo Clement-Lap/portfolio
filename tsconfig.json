@@ -14,5 +14,5 @@
       "@interfaces/*": ["./src/utils/interfaces/*"],
       "@i18n/*": ["./src/i18n/*"]
     }
-  }
+  },
 }
