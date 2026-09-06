@@ -1,18 +1,18 @@
-// @ts-check
 import { defineConfig, fontProviders } from "astro/config";
 
 import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
- 	i18n: {
+  i18n: {
     locales: ["fr", "en"],
-		defaultLocale: "en",
-		routing : {
-			prefixDefaultLocale: true,
-			redirectToDefaultLocale: true
-  	}
- 	},
+    defaultLocale: "en",
+    routing: {
+      prefixDefaultLocale: true,
+      redirectToDefaultLocale: true,
+    },
+	},
+	site: "https://clems.dev",
   fonts: [
     {
       provider: fontProviders.fontsource(),

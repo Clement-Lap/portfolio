@@ -1,10 +1,46 @@
 ---
-
+import styles from "@styles/components/header.module.pcss";
+import { getThemesNames } from "@utils/themes";
+import capitalize from "@utils/capitalize";
 ---
 
-<header>
-	<a href="/">Home</a>
-	<a href="/about">About</a>
-	<a href="/projects">Projects</a>
-	<a href="/blog">Blog</a>
+<header class={styles.header}>
+	<div class={styles["france-data"]}>
+		<code id="time">Time: <span></span></code>
+		<div id="weather"><code>Weather: </code></div>
+	</div>
+	<nav class={styles.links}>
+		<a href={"/en/"} class={styles["links__link"]} data-header-link>Home</a>
+		<a href={"/en/about"} class={styles["links__link"]} data-header-link>About</a>
+		<a href={"/en/projects"} class={styles["links__link"]} data-header-link>Projects</a>
+		<a href={"/en/blog"} class={styles["links__link"]} data-header-link>Blog</a>
+		<div id={styles.selector} data-header-link-selector></div>
+	</nav>
+	<div class={styles.interactions} id="interactions">
+		<select class={styles.language} id="language" data-lang-selection>
+			<option value="en">English</option>
+			<option value="fr">Français</option>
+		</select>
+		<select class={styles.theme} id="theme" data-theme-selection>
+			{getThemesNames().map((theme) => <option value={theme}>{capitalize(theme)}</option>)}
+		</select>
+	</div>
 </header>
+<script src="/src/scripts/header.ts"></script>
+
+<style is:inline>
+	#weather {
+		display: inline-flex;
+		align-content: center;
+		align-items: center;
+	}
+
+	#weather > code {
+		height: min-content;
+	}
+
+	#weather > img {
+		height: clamp(24px, 32px, 32px);
+		align-self: center;
+	}
+</style>

@@ -1,6 +1,6 @@
 import { experimental_AstroContainer } from "astro/container";
-import { describe, expect, it, test } from "vitest";
-import Caroussel from "../src/components/caroussel.astro";
+import { describe, expect, test } from "vitest";
+import Caroussel from "@components/carousel.astro";
 
 describe("Components test", () => {
   test("Caroussel test", async () => {
@@ -16,9 +16,13 @@ describe("Components test", () => {
 
     // check if the alternative text is here
     expect(result, "have image 1 alt").toContain('alt="Little me, angry me."');
-    expect(result, "have image 2 alt").toContain('alt="Me holding a long cat."');
+    expect(result, "have image 2 alt").toContain(
+      'alt="Me holding a long cat."',
+    );
     expect(result, "have image 3 alt").toContain('alt="My dumb cat."');
     expect(result, "have image 4 alt").toContain('alt="My evil cat."');
-    expect(result, "have image 5 alt").toContain('alt="She looks like Batman."');
+    expect(result, "have image 5 alt").toContain(
+      'alt="She looks like Batman."',
+    );
   });
 });
