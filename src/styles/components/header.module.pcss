@@ -1,30 +1,32 @@
 .header {
-	--header-height: max(5.8vh, 38px);
+	--header-height: 100px;
 	position: sticky;
 	top: 10px;
 	right: 5vw;
 	left: 5vw;
 	z-index: 1000;
 	display: grid;
-	grid-template-columns: 2fr 5fr 2fr;
 	gap: 10vw;
 	align-items: center;
 	justify-items: center;
 	height: var(--header-height);
 	padding: 0 5vw;
-	align-items: flex-start;
+	align-items: center;
 }
 
-.header > div {
-	width: 100%;
+@media screen and (--l-device) {
+	.header {
+		--header-height: max(5.8vh, 38px);
+		grid-template-columns: 2fr 5fr 2fr;
+		grid-template-areas: "francedata links interactions";
+	}
 }
 
 .interactions,
 .france-data {
 	display: flex;
-	padding: 1vh 0;
-	height: 100%;
 	border-radius: var(--border-radius);
+	width: 100%;
 }
 
 .language,
@@ -36,38 +38,110 @@
 	background-color: var(--primary-clr);
 	color: var(--background-clr);
 	outline: 2px solid var(--background-clr);
+	padding: 0 1em;
 }
 
 .interactions {
-	align-self: flex-end;
 	flex-direction: row;
+	height: 70%;
 	gap: 10%;
+	grid-area: interactions;
 }
 
 .france-data {
-	align-self: flex-start;
 	flex-direction: column;
+	background-color: var(--background-clr);
+	height: 100%;
+	justify-content: center;
+	padding: 0 2em;
+	grid-area: francedata;
+	align-content: center;
 }
 
 .links {
+	position: relative;
 	outline: 2px solid var(--background-clr);
-	align-self: center;
+	align-items: center;
+	justify-content: space-around;
+	width: 100%;
+	height: 100%;
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
 	background-color: var(--primary-clr);
 	border-radius: var(--border-radius);
-	padding: 0.7vh;
+	z-index: 0;
+	grid-area: links;
 }
 
-.links > .links__link {
+.links__link {
 	color: var(--secondary-clr);
-	width: 100%;
 	text-align: center;
-	border-radius: calc(var(--border-radius) - 0.7vh);
-	padding-top: calc((var(--header-height) - 0.7vh * 2 - 1em) / 2); /* dont ask me why 0.707 */
-	padding-bottom: calc((var(--header-height) - 0.7vh * 2 - 1em) / 2); /* same magic */
-	line-height: 1em;
 	transition:
 		background-color 0.3s,
 		color 0.3s;
+	z-index: 2;
+}
+
+:global(.links__link--active) {
+	background-color: red;
+	color: green
+}
+
+#selector {
+	--gap: 4px;
+	top: var(--gap);
+	bottom: var(--gap);
+	left: var(--gap);
+	right: calc(100% - var(--gap));
+	position: absolute;
+	background-color: var(--accent-clr);
+	border-radius: calc(var(--border-radius) - var(--gap));
+	z-index: 1;
+	transition: left .4s,
+							right .5s,
+							top .4s,
+							bottom .5s;
+}
+
+@media screen and (--s-device) {
+	.header {
+		--header-height: 100%;
+		grid-template-columns: 1fr;
+		gap: 10px;
+		grid-template-areas: "links"
+												 "interactions";
+		padding-top: 10px;
+		padding-bottom: 10px;
+
+	}
+
+	.links {
+		display: inline-flex;
+		justify-content: space-around;
+		height: 100%;
+		width: 100%;
+	}
+	.links__link {
+		padding: 1em 0;
+	}
+
+	.france-data {
+		flex-direction: column;
+		justify-content: space-evenly;
+		display: none;
+	}
+
+	.interactions {
+		height: 100%;
+		gap: 10px;
+	}
+
+	.language, .theme {
+		padding: 0.7em 1em;
+		flex-grow: 0;
+	}
+
+	#weather > span > img {
+		width: 32px;
+	}
 }

@@ -1,51 +1,6 @@
-<script>
-	const defaultSize = 70;
-	let isInit = false;
-	let cursor: HTMLElement | undefined;
+---
+import "@styles/components/cursor.module.pcss";
+---
 
-	function moveCursor(event: MouseEvent) {
-		if (!cursor) return;
-		if (!isInit) return; // does not try to move the cursor if not created
-		const clientX = event.pageX;
-		const clientY = event.pageY;
-
-		const left = Math.max(defaultSize / 2, Math.min(document.body.clientWidth - defaultSize / 2, clientX));
-		cursor.style.top = `${clientY}px`;
-		cursor.style.left = `${left}px`;
-	}
-
-	/// if mouse moving -> create the cursor
-	function toggleCursor() {
-		cursor = document.createElement("div");
-		cursor.id = "cursor";
-		document.body.appendChild(cursor);
-		isInit = true;
-		document.body.removeEventListener("mouseenter", toggleCursor); // kill itself so its fired once
-	}
-
-	document.addEventListener("mousemove", moveCursor);
-	document.body.addEventListener("mouseenter", toggleCursor);
-</script>
-
-<style is:global>
-	body {
-		position: relative;
-	}
-	#cursor {
-		z-index: 100;
-		background-color: #ffffff00;
-		backdrop-filter: invert(100%);
-		position: absolute;
-		width: 70px;
-		aspect-ratio: 1;
-		border-radius: 100%;
-		transition:
-			left 0.1s ease-out,
-			top 0.1s ease-out,
-			width 0.3s;
-		transform: translate(-50%, -50%);
-		border: 1px solid #00000044;
-		pointer-events: none;
-		transition-duration: 0.08s;
-	}
-</style>
+<script src="/src/scripts/cursor.ts"></script>
+<script></script>

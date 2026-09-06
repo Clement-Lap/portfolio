@@ -4,6 +4,15 @@
 	box-sizing: border-box;
 }
 
+:root {
+	--accent-clr: #a4d5eb;
+	--primary-clr: #35383a;
+	--secondary-clr: #d2d2d2;
+	--background-clr: #ffffff;
+
+	--border-radius: 20px;
+}
+
 *:not(dialog) {
 	margin: 0;
 }
@@ -17,6 +26,7 @@
 body {
 	-webkit-font-smoothing: antialiased;
 	width: 100%;
+	background-color: var(--background-clr);
 }
 
 section {
@@ -25,16 +35,6 @@ section {
 
 a {
 	text-decoration: none;
-}
-
-:root {
-	--accent-clr: #a4d5eb;
-	--primary-clr: #35383a;
-	--primary-clr-2: #4d5153;
-	--secondary-clr: #d2d2d2;
-	--background-clr: #ffffff;
-
-	--border-radius: min(10px, 10%);
 }
 
 h1 {
@@ -48,7 +48,7 @@ h2,
 h3 {
 	font-weight: 400;
 	font-family: var(--font-lexend);
-	color: var(--primary-clr-2);
+	color: rgba(from var(--primary-clr) r g b / .9);
 }
 
 h6 {
@@ -113,7 +113,7 @@ p {
 	width: fit-content;
 }
 
-@media screen and (min-width: 1440px) {
+@media screen and (--l-device) {
 	h1 {
 		font-size: 52px;
 	}
@@ -128,7 +128,7 @@ p {
 	textarea,
 	textarea::placeholder,
 	p {
-		font-size: 18px;
+		font-size: 16px;
 	}
 
 	.underlined::after {
@@ -137,7 +137,7 @@ p {
 	}
 }
 
-@media screen and (max-width: 1440px) and (min-width: 1280px) {
+@media screen and (--m-device) {
 	h1 {
 		font-size: 48px;
 	}
@@ -158,23 +158,28 @@ p {
 	}
 }
 
-@media screen and (max-width: 1280px) and (min-width: 960px) {
+@media screen and (--s-device) {
 	h1 {
-		font-size: 48px;
+		font-size: 26px;
 	}
 
-	h2,
+	h2 {
+		font-size: 24px;
+	}
+
 	h3 {
-		font-size: 36px;
+		font-size: 22px;
+	}
+
+	h6 {
+		font-size: 18px;
 	}
 
 	li,
 	p {
-		font-size: 12px;
+		font-size: 14px;
 	}
-}
 
-@media (width < 740px) {
 	section {
 		padding: 0;
 	}
