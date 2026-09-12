@@ -1,0 +1,11 @@
+User-agent: Googlebot-Images
+Disallow: /
+
+User-agent: MSNBot-Media
+Disallow: /
+
+User-agent: *
+Allow: /
+
+Content-Signal: ai-train=no, search=yes, ai-input=no
+Sitemap: https://www.clems.dev/sitemap-0.xml
