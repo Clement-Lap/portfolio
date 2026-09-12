@@ -5,8 +5,8 @@ import SkillCards, { Direction } from "@components/skill-cards.astro";
 import { SkillImages } from "@utils/skill-card-imports.ts";
 import TimelineElement from "@components/timeline-element.astro";
 import ContactForm from "@components/contact-form.astro";
-import ScrollDownArrowImage from "@images/other/scroll-down-arrow.astro";
-import Tree from "@images/other/tree.astro";
+import ScrollDownArrowImage from "@images/scroll-down-arrow.svg";
+import Tree from "@images/tree.svg";
 
 import AngryClem from "@images/clem/angry-clem.png";
 import ClemNCat from "@images/clem/clem-n-cat.png";
@@ -15,11 +15,13 @@ import EvilCat from "@images/clem/evil-cat.png";
 import GloriousCat from "@images/clem/glorious-cat.png";
 ---
 
-<Layout lang="en" title="home">
+<Layout title="home">
 	<section id="landing">
 		<div id="landing-text">
 			<div id="landing-text__name">
-				<h1>I'm <span class="highlighted">Clément Laporte</span>.</h1>
+				<h1>
+					I'm <span class="highlighted">Clément Laporte</span>.
+				</h1>
 			</div>
 			<div id="landing-text__context">
 				<h2>
@@ -68,7 +70,9 @@ import GloriousCat from "@images/clem/glorious-cat.png";
 	</section>
 	<section id="my-skills">
 		<div id="my-skills__title">
-			<h1>My <span class="highlighted">tech stack</span></h1>
+			<h1>
+				My <span class="highlighted">tech stack</span>
+			</h1>
 		</div>
 		<div id="my-skills__cards">
 			<SkillCards
@@ -134,9 +138,11 @@ import GloriousCat from "@images/clem/glorious-cat.png";
 	</section>
 	<section id="timeline">
 		<div id="timeline__title">
-			<h1>My <span class="highlighted">timeline</span></h1>
+			<h1>
+				My <span class="highlighted">timeline</span>
+			</h1>
 		</div>
-		<div id="timeline__timeline-elements">
+		<div id="timeline__elements">
 			<Tree />
 			<TimelineElement
 				title="2026 - Present"
@@ -178,7 +184,9 @@ import GloriousCat from "@images/clem/glorious-cat.png";
 	</section>
 	<section id="contact-me">
 		<div id="contact-me__title">
-			<h1><span class="highlighted">Contact</span> me</h1>
+			<h1>
+				<span class="highlighted">Contact</span> me
+			</h1>
 		</div>
 		<ContactForm nameLabel="name" fillLabel="fill" sendLabel="send" />
 	</section>
@@ -216,13 +224,7 @@ import GloriousCat from "@images/clem/glorious-cat.png";
 			"tools tools .";
 	}
 
-	#timeline {
-		margin-bottom: -60px !important;
-		padding-bottom: 0 !important ;
-		width: 100%;
-	}
-
-	#timeline__timeline-elements {
+	#timeline__elements {
 		position: relative;
 		height: fit-content;
 		width: 100%;
@@ -236,14 +238,14 @@ import GloriousCat from "@images/clem/glorious-cat.png";
 		background-color: var(--primary-clr);
 	}
 
-	@media (width < 1280px) {
+	@media screen and (--m-device) {
 		#landing {
 			grid-template-columns: 1fr;
 			grid-template-rows: 1fr 3fr;
 		}
 
 		#landing-text__name > h1 {
-			font-size: 7vw;
+			font-size: 6vw;
 		}
 
 		#my-skills > #my-skills__cards {
@@ -254,7 +256,15 @@ import GloriousCat from "@images/clem/glorious-cat.png";
 		}
 	}
 
-	@media (width < 740px) {
+	@media screen and (--m-device) or (--s-device) {
+		#timeline {
+			margin-bottom: -60px !important;
+			padding-bottom: 0 !important ;
+			width: 100%;
+		}
+	}
+
+	@media screen and (--s-device) {
 		#landing {
 			display: flex;
 			gap: 4em;
@@ -287,9 +297,23 @@ import GloriousCat from "@images/clem/glorious-cat.png";
 				"tools";
 		}
 
-		#landing,
-		section:not(#landing) {
-			padding: 5vw;
+		#timeline__elements {
+			display: flex;
+			flex-direction: column;
+			gap: 22px;
+		}
+
+		#timeline {
+			gap: 2em;
+			margin-bottom: 30px;
+		}
+
+		#timeline__elements > svg {
+			display: none;
+		}
+
+		section {
+			padding: 5vw !important;
 		}
 	}
 </style>

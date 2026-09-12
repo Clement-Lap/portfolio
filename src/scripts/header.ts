@@ -1,3 +1,4 @@
+import { setCookie } from "@utils/cookie";
 import { applyTheme } from "@utils/themes";
 
 const timeDataElement: HTMLSpanElement = document.querySelector("#time > span")!;
@@ -45,8 +46,6 @@ if (currentLink) {
 
 	currentLinkElement.style.color = "var(--primary-clr)";
 
-	console.log(currentLinkElement)
-
 	if (window.screen.width > 480) {
 		headerSelector.style.left = `calc(var(--gap) + ${nLink! * 25}%)`;
 		headerSelector.style.right = `calc(var(--gap) + ${100 - (nLink! + 1) * 25}%)`;
@@ -59,8 +58,10 @@ if (currentLink) {
 langSelectionElement.addEventListener("change", () => {
   const currentUrl = document.URL;
   const splitUrl = currentUrl.split("/");
-  splitUrl[3] = langSelectionElement.value;
+	splitUrl[3] = langSelectionElement.value;
   const endUrl = splitUrl.join("/");
+
+ 	setCookie("lang", langSelectionElement.value, 7);
 
   if (endUrl !== currentUrl) window.location.replace(endUrl);
 });

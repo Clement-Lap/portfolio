@@ -1,32 +1,190 @@
 ---
-import styles from "@styles/components/header.module.pcss";
 import { getThemesNames } from "@utils/themes";
 import capitalize from "@utils/capitalize";
 ---
 
-<header class={styles.header}>
-	<div class={styles["france-data"]}>
-		<code id="time">Time: <span></span></code>
-		<div id="weather"><code>Weather: </code></div>
+<header class="header">
+	<div id="france-data">
+		<code id="time">
+			Time: <span></span>
+		</code>
+		<div id="weather">
+			<code>Weather: </code>
+		</div>
 	</div>
-	<nav class={styles.links}>
-		<a href={"/en/"} class={styles["links__link"]} data-header-link>Home</a>
-		<a href={"/en/about"} class={styles["links__link"]} data-header-link>About</a>
-		<a href={"/en/projects"} class={styles["links__link"]} data-header-link>Projects</a>
-		<a href={"/en/blog"} class={styles["links__link"]} data-header-link>Blog</a>
-		<div id={styles.selector} data-header-link-selector></div>
+	<nav id="links">
+		<a href={"/en/"} class="links__link" data-header-link>
+			Home
+		</a>
+		<a href={"/en/about"} class="links__link" data-header-link>
+			About
+		</a>
+		<a href={"/en/projects"} class="links__link" data-header-link>
+			Projects
+		</a>
+		<a href={"/en/blog"} class="links__link" data-header-link>
+			Blog
+		</a>
+		<div id="selector" data-header-link-selector></div>
 	</nav>
-	<div class={styles.interactions} id="interactions">
-		<select class={styles.language} id="language" data-lang-selection>
+	<div id="interactions">
+		<select id="language" data-lang-selection>
 			<option value="en">English</option>
 			<option value="fr">Français</option>
 		</select>
-		<select class={styles.theme} id="theme" data-theme-selection>
-			{getThemesNames().map((theme) => <option value={theme}>{capitalize(theme)}</option>)}
+		<select id="theme" data-theme-selection>
+			{getThemesNames().map((theme) => (
+				<option value={theme}>{capitalize(theme)}</option>
+			))}
 		</select>
 	</div>
 </header>
 <script src="/src/scripts/header.ts"></script>
+
+<style>
+	header {
+		--header-height: 100px;
+		position: sticky;
+		top: 10px;
+		right: 5vw;
+		left: 5vw;
+		z-index: 1000;
+		display: grid;
+		gap: 10vw;
+		align-items: center;
+		justify-items: center;
+		height: var(--header-height);
+		padding: 0 5vw;
+		align-items: center;
+	}
+
+	@media screen and (--l-device) {
+		header {
+			--header-height: max(5.8vh, 38px);
+			grid-template-columns: 2fr 5fr 2fr;
+			grid-template-areas: "francedata links interactions";
+		}
+	}
+
+	#interactions,
+	#france-data {
+		display: flex;
+		border-radius: var(--border-radius);
+		width: 100%;
+	}
+
+	#language,
+	#theme {
+		text-align: center;
+		flex-grow: 1;
+		border-radius: var(--border-radius);
+		border: none;
+		background-color: var(--primary-clr);
+		color: var(--background-clr);
+		outline: 2px solid var(--background-clr);
+		padding: 0 1em;
+	}
+
+	#interactions {
+		flex-direction: row;
+		height: 70%;
+		gap: 10%;
+		grid-area: interactions;
+	}
+
+	#france-data {
+		flex-direction: column;
+		background-color: var(--background-clr);
+		height: 100%;
+		justify-content: center;
+		padding: 0 2em;
+		grid-area: francedata;
+		align-content: center;
+	}
+
+	#links {
+		position: relative;
+		outline: 2px solid var(--background-clr);
+		align-items: center;
+		justify-content: space-around;
+		width: 100%;
+		height: 100%;
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		background-color: var(--primary-clr);
+		border-radius: var(--border-radius);
+		z-index: 0;
+		grid-area: links;
+	}
+
+	.links__link {
+		color: var(--secondary-clr);
+		text-align: center;
+		transition:
+			background-color 0.3s,
+			color 0.3s;
+		z-index: 2;
+	}
+
+	#selector {
+		--gap: 4px;
+		top: var(--gap);
+		bottom: var(--gap);
+		left: var(--gap);
+		right: calc(100% - var(--gap));
+		position: absolute;
+		background-color: var(--accent-clr);
+		border-radius: calc(var(--border-radius) - var(--gap));
+		z-index: 1;
+		transition:
+			left 0.4s,
+			right 0.5s,
+			top 0.4s,
+			bottom 0.5s;
+	}
+
+	@media screen and (--s-device) {
+		header {
+			--header-height: 100%;
+			grid-template-columns: 1fr;
+			gap: 10px;
+			grid-template-areas:
+				"links"
+				"interactions";
+			padding-top: 10px;
+			padding-bottom: 10px;
+		}
+
+		#links {
+			display: inline-flex;
+			justify-content: space-around;
+			height: 100%;
+			width: 100%;
+		}
+		.links__link {
+			padding: 1em 0;
+		}
+
+		#france-data {
+			display: none;
+		}
+
+		#interactions {
+			height: 100%;
+			gap: 10px;
+		}
+
+		#language,
+		#theme {
+			padding: 0.7em 1em;
+			flex-grow: 0;
+		}
+
+		#weather > span > img {
+			width: 32px;
+		}
+	}
+</style>
 
 <style is:inline>
 	#weather {
