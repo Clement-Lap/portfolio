@@ -1,6 +1,4 @@
 ---
-import styles from "@styles/components/timeline-element.module.pcss";
-
 interface Props {
 	title: string;
 	description: string[];
@@ -9,9 +7,47 @@ interface Props {
 const { title, description } = Astro.props;
 ---
 
-<div class={styles.timeline}>
-	<h3 class={`highlighted ${styles["timeline__title"]}`}>{title}</h3>
+<div class="timeline-element">
+	<h3 class="highlighted timeline-element__title" }>
+		{title}
+	</h3>
 	<ul>
-		{description.map((element: string) => <li>{element}</li>)}
+		{description.map((element: string) => (
+			<li>{element}</li>
+		))}
 	</ul>
 </div>
+<style>
+	.timeline-element {
+		position: absolute;
+		max-width: min(40vw, 400px);
+		display: flex;
+		flex-direction: column;
+		gap: 0;
+		margin: 0;
+		height: fit-content;
+		background-color: rgb(from var(--background-clr) r g b / 85%);
+		backdrop-filter: blur(8px);
+		/*
+		transform: translate(-50%, -50%);
+		*/
+		padding: 10px 20px;
+		outline: 7px solid var(--primary-clr);
+		border-radius: var(--border-radius);
+	}
+
+	.timeline-element__title {
+		margin: 0 !important;
+		padding: 5px 0 !important;
+	}
+
+	@media screen and (--s-device) {
+		.timeline-element {
+			position: static;
+			outline: none;
+			width: 100%;
+			max-width: 100%;
+			padding: 0;
+		}
+	}
+</style>
