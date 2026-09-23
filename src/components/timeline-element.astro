@@ -2,15 +2,40 @@
 interface Props {
 	title: string;
 	description: string[];
+	x: string;
+	y: string;
 }
 
-const { title, description } = Astro.props;
+function formatX(str: string) {
+	let result: string;
+	if (str.startsWith("-")) {
+		result = `right: ${str.slice(1)}`;
+	} else {
+		result = `left: ${str}`;
+	}
+
+	return result;
+}
+
+function formatY(str: string) {
+	let result: string;
+	if (str.startsWith("-")) {
+		result = `bottom: ${str.slice(1)}`;
+	} else {
+		result = `top: ${str}`;
+	}
+
+	return result;
+}
+
+const { title, description, x, y } = Astro.props;
+
+const newX = formatX(x);
+const newY = formatY(y);
 ---
 
-<div class="timeline-element">
-	<h3 class="highlighted timeline-element__title" }>
-		{title}
-	</h3>
+<div class="timeline-element" style=`${newX}; ${newY}`>
+	<h6 class="highlighted timeline-element__title">{title}</h6>
 	<ul>
 		{description.map((element: string) => (
 			<li>{element}</li>
@@ -28,26 +53,41 @@ const { title, description } = Astro.props;
 		height: fit-content;
 		background-color: rgb(from var(--background-clr) r g b / 85%);
 		backdrop-filter: blur(8px);
-		/*
-		transform: translate(-50%, -50%);
-		*/
 		padding: 10px 20px;
 		outline: 7px solid var(--primary-clr);
 		border-radius: var(--border-radius);
 	}
 
-	.timeline-element__title {
-		margin: 0 !important;
-		padding: 5px 0 !important;
+	h6.timeline-element__title {
+		margin: 0;
+		padding: 5px 0;
 	}
 
 	@media screen and (--s-device) {
+		/*
+
+																	.timeline-element {
+																	position: static;
+																	outline: none;
+																	width: 100%;
+																	max-width: 100%;
+																	padding: 0;
+																	}
+
+																	*/
+
+		.timeline-element > ul {
+			display: none;
+		}
+
 		.timeline-element {
-			position: static;
-			outline: none;
+			padding: 5px 10px;
 			width: 100%;
-			max-width: 100%;
-			padding: 0;
+			outline: 3px solid var(--primary-clr);
+		}
+
+		.timeline-element > h6.timeline-element__title {
+			text-align: center;
 		}
 	}
 </style>

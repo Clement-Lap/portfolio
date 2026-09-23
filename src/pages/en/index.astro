@@ -25,8 +25,7 @@ import GloriousCat from "@images/clem/glorious-cat.png";
 			</div>
 			<div id="landing-text__context">
 				<h2>
-					A <span class="bold underlined">France</span> based developer & &#20;
-					<span class="bold underlined">student</span>,
+					A <span class="bold underlined">France</span> based developer & <span class="bold underlined">student</span>.
 					<br />
 					Specialized in <span class="bold">web</span> and <span class="bold">software</span> development.
 				</h2>
@@ -153,6 +152,8 @@ import GloriousCat from "@images/clem/glorious-cat.png";
 					"- Create my own taskbar for Hyprland",
 					"- Contribute to open source projects",
 				]}
+				x="-0%"
+				y="30%"
 			/>
 			<TimelineElement
 				title="2025"
@@ -162,6 +163,8 @@ import GloriousCat from "@images/clem/glorious-cat.png";
 					"Created the pong game in Vanilla Javascript using canvas.",
 					"Learned Rust",
 				]}
+				x="0"
+				y="40%"
 			/>
 			<TimelineElement
 				title="2024"
@@ -170,15 +173,18 @@ import GloriousCat from "@images/clem/glorious-cat.png";
 					"Wrote an unfinished book on Python.",
 					"Created small temporary websites.",
 				]}
+				x="-0%"
+				y="50%"
 			/>
 			<TimelineElement
-				}
 				title="Past"
 				description={[
 					"Learned Python, Javascript, CSS and HTML.",
 					"Created a website for the discord bot in VueJS.",
 					"Created a moderation discord bot, which I abandoned after it reached 100 servers.",
 				]}
+				x="2%"
+				y="60%"
 			/>
 		</div>
 	</section>
@@ -256,9 +262,12 @@ import GloriousCat from "@images/clem/glorious-cat.png";
 		}
 	}
 
-	@media screen and (--m-device) or (--s-device) {
+	#timeline {
+		margin-bottom: -60px !important;
+	}
+
+	@media screen and (--l-device), screen and (--m-device) {
 		#timeline {
-			margin-bottom: -60px !important;
 			padding-bottom: 0 !important ;
 			width: 100%;
 		}
@@ -270,10 +279,6 @@ import GloriousCat from "@images/clem/glorious-cat.png";
 			gap: 4em;
 			padding-top: 4em;
 			flex-direction: column;
-		}
-
-		#landing-text__context > h2 > br {
-			display: none;
 		}
 
 		#landing-text__name {
@@ -309,7 +314,7 @@ import GloriousCat from "@images/clem/glorious-cat.png";
 		}
 
 		#timeline__elements > svg {
-			display: none;
+			//display: none;
 		}
 
 		section {

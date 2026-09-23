@@ -1,6 +1,6 @@
-const inputs = document.querySelectorAll<HTMLInputElement>("input");
-const textarea = document.querySelector<HTMLTextAreaElement>("textarea")!;
-const form = document.querySelector<HTMLFormElement>("form")!;
+const inputs = document.querySelectorAll<HTMLInputElement>("[data-contact-form] > div > [data-form-input]");
+const textarea = document.querySelector<HTMLTextAreaElement>("[data-contact-form] > div > [data-form-textarea]")!;
+const form = document.querySelector<HTMLFormElement>("[data-contact-form]")!;
 const formData = new FormData(form);
 
 inputs.forEach((input) => {
@@ -11,13 +11,13 @@ textarea.addEventListener("input", () => textarea.classList.toggle("empty", text
 
 async function sendData() {
   try {
-    const response = await fetch("https://www.nonexistant.domain.com", {
+    const response = await fetch("https://api.clems.dev/contact", {
       method: "POST",
       body: formData,
       mode: "no-cors",
     });
     if (response.ok) {
-			alert("Message sent successfully!");
+			alert(`An email have been sent to ${formData.get("email")} to validate your message.`);
 		} else if (response.status === 400) {
 			alert(`Invalid input.`);
 		} else {

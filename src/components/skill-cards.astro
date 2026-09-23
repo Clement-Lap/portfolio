@@ -1,5 +1,4 @@
 ---
-import styles from "@styles/components/skill-cards.module.pcss";
 import { Image } from "astro:assets";
 import { type ISkillImage } from "@utils/skill-card-imports.ts";
 
@@ -18,12 +17,12 @@ export enum Direction {
 const { title, description, images, direction = "vertical" } = Astro.props;
 ---
 
-<div class={`${styles["skill-card"]} ${styles[direction]}`}>
-	<div class={styles["skill-card__text"]}>
-		<h3 class={`highlighted ${styles["skill-card__title"]}`}>{title}</h3>
-		<p class={styles["skill-card__description"]}>{description}</p>
+<div class={`skill-card ${direction}`}>
+	<div class="text-section">
+		<h3 class="highlighted title">{title}</h3>
+		<p class="description">{description}</p>
 	</div>
-	<div class={styles["skill-card__images"]}>
+	<div class="image-section">
 		{
 			images
 				.sort((img1, img2) => (img1.highlight === img2.highlight ? 0 : img1.highlight ? -1 : 1))
@@ -31,7 +30,7 @@ const { title, description, images, direction = "vertical" } = Astro.props;
 				.map((img) => (
 					<Image
 						src={img.import}
-						class={img.highlight ? `${styles["language-logo"]} ${styles["highlighted-logo"]}` : styles["language-logo"]}
+						class={img.highlight ? "language-logo highlighted-logo" : "language-logo"}
 						width={128}
 						height={128}
 						alt={img.alt}
@@ -40,3 +39,83 @@ const { title, description, images, direction = "vertical" } = Astro.props;
 		}
 	</div>
 </div>
+
+<style>
+	.skill-card {
+		display: flex;
+		padding: 16px;
+		gap: 20px;
+		border: 1px solid var(--accent-clr);
+		border-radius: var(--border-radius);
+		height: fit-content;
+		width: 100%;
+	}
+
+	.horizontal {
+		flex-direction: row;
+	}
+
+	.vertical {
+		flex-direction: column;
+	}
+
+	.skill-card > .text-section > .title,
+	.skill-card > .text-section > .description {
+		padding: 0;
+		margin: 0;
+	}
+
+	.skill-card > .image-section {
+		display: flex;
+		flex-wrap: wrap;
+		height: fit-content;
+		gap: 6px;
+	}
+
+	.skill-card:nth-child(1) {
+		grid-area: frontend;
+	}
+
+	.skill-card:nth-child(2) {
+		grid-area: backend;
+	}
+
+	.skill-card:nth-child(3) {
+		grid-area: software;
+	}
+
+	.skill-card:nth-child(4) {
+		grid-area: tools;
+	}
+
+	.skill-card > .image-section > img {
+		padding: 6px;
+		flex: 1 1 0%;
+		min-width: 51px;
+		max-width: 64px;
+		object-fit: cover;
+		height: auto;
+		aspect-ratio: 1;
+		border-radius: var(--border-radius);
+	}
+
+	.highlighted-logo {
+		background-color: var(--accent-clr);
+	}
+
+	@media (max-width: 1280px) {
+		.horizontal {
+			flex-direction: column;
+		}
+	}
+
+	@media (620px < width < 740px) {
+		.horizontal {
+			flex-direction: row;
+		}
+
+		.vertical {
+			flex-direction: row;
+		}
+	}
+</style>

@@ -1,9 +1,21 @@
----
-import styles from "@styles/components/footer.module.pcss";
-import HeaderParts from "@components/footer-parts.astro";
-import translator, { type LangType } from "@i18n/translations";
----
-
-<footer class={styles.footer}>
+<footer>
 	<slot />
 </footer>
+
+<style>
+	footer {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		padding: 12.5% 10%;
+		gap: 3em;
+		background-color: var(--primary-clr);
+		width: 100%;
+	}
+
+	@media screen and (--s-device) {
+		footer {
+			grid-template-columns: 1fr;
+			grid-template-rows: auto;
+		}
+	}
+</style>
