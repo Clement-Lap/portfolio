@@ -46,8 +46,6 @@ import capitalize from "@utils/capitalize";
 		--header-height: 100px;
 		position: sticky;
 		top: 10px;
-		right: 5vw;
-		left: 5vw;
 		z-index: 1000;
 		display: grid;
 		gap: 10vw;
@@ -60,6 +58,7 @@ import capitalize from "@utils/capitalize";
 
 	@media screen and (--l-device) {
 		header {
+			padding: 0 5vw;
 			--header-height: max(5.8vh, 38px);
 			grid-template-columns: 2fr 5fr 2fr;
 			grid-template-areas: "francedata links interactions";
@@ -143,14 +142,33 @@ import capitalize from "@utils/capitalize";
 			bottom 0.5s;
 	}
 
+	@media screen and (--m-device) {
+		header {
+			padding: 0 10vw;
+			grid-template-columns: 1fr;
+			grid-template-areas:
+				"links links"
+				"francedata interactions";
+		}
+	}
+
 	@media screen and (--s-device) {
 		header {
-			--header-height: 100%;
 			grid-template-columns: 1fr;
-			gap: 10px;
 			grid-template-areas:
 				"links"
 				"interactions";
+		}
+
+		#france-data {
+			display: none;
+		}
+	}
+
+	@media screen and (--s-device), screen and (--m-device) {
+		header {
+			--header-height: 100%;
+			gap: 10px;
 			padding-top: 10px;
 			padding-bottom: 10px;
 		}
@@ -163,10 +181,6 @@ import capitalize from "@utils/capitalize";
 		}
 		.links__link {
 			padding: 1em 0;
-		}
-
-		#france-data {
-			display: none;
 		}
 
 		#interactions {

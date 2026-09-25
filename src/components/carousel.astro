@@ -14,19 +14,19 @@ const { data, rewindButtonText } = Astro.props;
 
 <div id="carousel" data-carousel>
 	<div id="carousel-wrapper" data-carousel-wrapper>
-		{
-			data.map((image) => (
-				<Image
-					src={image.src}
-					data-carousel-image={i++}
-					alt={image.alt}
-					draggable="false"
-					width={400}
-					data-description={image.description}
-				/>
-			))
-		}
-		<button id="rewind-btn" data-carousel-rewind>{rewindButtonText}</button>
+		{data.map((image) => (
+			<Image
+				src={image.src}
+				data-carousel-image={i++}
+				alt={image.alt}
+				draggable="false"
+				width={400}
+				data-description={image.description}
+			/>
+		))}
+		<button id="rewind-btn" data-carousel-rewind>
+			{rewindButtonText}
+		</button>
 	</div>
 	<p id="img-description" data-carousel-description></p>
 </div>
@@ -34,57 +34,31 @@ const { data, rewindButtonText } = Astro.props;
 <script src="/src/scripts/carousel.ts"></script>
 
 <style>
-#carousel > #img-description {
-	font-size: 1.2em; /* the font looks smaller by default */
-	font-family: var(--font-akaya) !important;
-	font-weight: 400;
-	user-select: none;
-	height: 100%;
-	text-align: center;
-	width: min(400px, 45vw);
-	text-wrap: wrap;
-	margin: auto;
-}
+	#carousel > #img-description {
+		font-size: 1.2em; /* the font looks smaller by default */
+		font-family: var(--font-akaya) !important;
+		font-weight: 400;
+		user-select: none;
+		height: fit-content;
+		text-align: center;
+		text-wrap: wrap;
+		margin: auto;
+	}
 
-#carousel {
-	justify-content: center;
-	display: flex;
-	flex-direction: column;
-	gap: 1em;
-}
-
-#carousel > #carousel-wrapper > img {
-	border-radius: calc(var(--border-radius) * 4);
-	user-select: none;
-	height: auto;
-	width: min(400px, 45vw);
-	transition: all 0.6s;
-}
-
-#carousel-wrapper {
-	position: relative;
-	width: 100%;
-}
-
-#rewind-btn {
-	z-index: 1;
-	padding: 2em 4em;
-	border-radius: var(--border-radius);
-	border: none;
-}
-
-@media screen and (--l-device) {
-	#carousel-wrapper {
-		transform-origin: 0% 0%;
-		height: calc(min(24vw, 340px) * 1.8);
+	#carousel {
+		justify-content: center;
+		display: flex;
+		flex-direction: column;
+		gap: 1em;
+		height: 100%;
 	}
 
 	#carousel > #carousel-wrapper > img {
+		border-radius: calc(2 * var(--border-radius));
 		user-select: none;
-		pointer-events: all;
-		width: min(24vw, 340px);
 		height: auto;
-		transition: all 0.2s;
+		width: min(400px, 45vw);
+		transition: all 0.6s;
 	}
 
 	#carousel > #carousel-wrapper > * {
@@ -94,55 +68,90 @@ const { data, rewindButtonText } = Astro.props;
 		transform: translate(-50%, -50%);
 	}
 
-	#carousel > #carousel-wrapper > img:nth-child(1) {
-		z-index: 2;
-	}
-
-	#carousel > #carousel-wrapper > img:nth-child(2) {
-		z-index: 3;
-	}
-
-	#carousel > #carousel-wrapper > img:nth-child(3) {
-		z-index: 4;
-	}
-
-	#carousel > #carousel-wrapper > img:nth-child(4) {
-		z-index: 5;
-	}
-
-	#carousel > #carousel-wrapper > img:nth-child(5) {
-		z-index: 6;
-	}
-}
-
-@media (--m-device) {
-	#carousel {
-		width: 100%;
-	}
-
-	#carousel > #carousel-wrapper {
+	#carousel-wrapper {
 		position: relative;
-		overflow: hidden;
-		width: 100%;
-		height: 500px;
+		width: min(400px, 45vw);
+		margin: auto;
+		aspect-ratio: 1 / 1.5528;
 	}
 
-	#carousel > #carousel-wrapper > img {
-		height: 100%;
-		width: auto;
-		position: absolute;
-		top: 50%;
-		right: 0;
+	#rewind-btn {
 		z-index: 1;
-		transform: translate(0, -50%) scale(0.5);
+		padding: 2em 4em;
+		border-radius: var(--border-radius);
+		border: none;
 	}
 
-	#carousel > #img-description {
-		width: 100%;
+	@media screen and (--l-device) {
+		#carousel > #img-description {
+			width: min(400px, 45vw);
+		}
+
+		#carousel-wrapper {
+			transform-origin: 0% 0%;
+			height: calc(min(24vw, 340px) * 1.8);
+		}
+
+		#carousel > #carousel-wrapper > img {
+			user-select: none;
+			pointer-events: all;
+			width: min(24vw, 340px);
+			height: auto;
+			transition: all 0.2s;
+		}
+
+		#carousel > #carousel-wrapper > img:nth-child(1) {
+			z-index: 2;
+		}
+
+		#carousel > #carousel-wrapper > img:nth-child(2) {
+			z-index: 3;
+		}
+
+		#carousel > #carousel-wrapper > img:nth-child(3) {
+			z-index: 4;
+		}
+
+		#carousel > #carousel-wrapper > img:nth-child(4) {
+			z-index: 5;
+		}
+
+		#carousel > #carousel-wrapper > img:nth-child(5) {
+			z-index: 6;
+		}
 	}
 
-	#carousel-wrapper > #rewind-btn {
-		display: none;
+	@media screen (--m-device), screen and (--s-device) {
+		#carousel {
+			width: 100%;
+			height: 100%;
+		}
+
+		#carousel > #carousel-wrapper {
+			position: relative;
+			overflow: hidden;
+			width: 100%;
+			aspect-ratio: 1 / 1.5528;
+		}
+
+		#carousel > #carousel-wrapper > img {
+			height: 100%;
+			width: auto;
+			position: absolute;
+			top: 50%;
+			right: 0;
+			z-index: 1;
+			transform: translate(0, -50%) scale(0.5);
+		}
+
+		#carousel > #img-description {
+			width: 100%;
+			padding: 0;
+			margin: 0;
+		}
+
+		#carousel-wrapper > #rewind-btn {
+			display: none;
+		}
 	}
-}
 </style>

@@ -42,6 +42,28 @@ const newY = formatY(y);
 		))}
 	</ul>
 </div>
+
+<script>
+	const timelineElements = document.querySelectorAll("div.timeline-element");
+
+	function toggleActive(element: HTMLElement) {
+		const isActive = element.classList.contains("active");
+		if (isActive) {
+			const className = element.className;
+			element.className = className.replace("active", "");
+		} else {
+			element.className += " active";
+		}
+	}
+
+	timelineElements.forEach((element) => {
+		element.addEventListener("pointerdown", () => {
+			toggleActive(element as HTMLElement);
+			console.log("tung ");
+		});
+	});
+</script>
+
 <style>
 	.timeline-element {
 		position: absolute;
@@ -63,27 +85,30 @@ const newY = formatY(y);
 		padding: 5px 0;
 	}
 
-	@media screen and (--s-device) {
-		/*
-
-																	.timeline-element {
-																	position: static;
-																	outline: none;
-																	width: 100%;
-																	max-width: 100%;
-																	padding: 0;
-																	}
-
-																	*/
-
+	@media screen and (--s-device), screen and (--m-device) {
 		.timeline-element > ul {
 			display: none;
 		}
 
 		.timeline-element {
 			padding: 5px 10px;
-			width: 100%;
+			width: 80%;
 			outline: 3px solid var(--primary-clr);
+			/*transition: all 0.2s ease-in-out;*/
+		}
+
+		.timeline-element.active > ul {
+			display: block;
+		}
+
+		.timeline-element.active {
+			right: 0;
+			left: 0;
+			max-width: 100%;
+			width: 100%;
+			height: max-content;
+			z-index: 10;
+			padding: 10px 10px;
 		}
 
 		.timeline-element > h6.timeline-element__title {

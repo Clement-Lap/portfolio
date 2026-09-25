@@ -1,10 +1,10 @@
 const defaultSize = 70;
 let isInit = false;
-let cursor: HTMLElement | undefined;
+let cursor: HTMLElement = document.querySelector("[data-cursor]")!;
 
-function moveCursor(event: MouseEvent) {
-  if (!cursor) return;
-  if (!isInit) return;
+function moveCursor(event: PointerEvent) {
+	if (event.pointerType === "touch") return;
+
   const clientX = event.pageX;
   const clientY = event.pageY;
 
@@ -16,15 +16,4 @@ function moveCursor(event: MouseEvent) {
   cursor.style.left = `${left}px`;
 }
 
-function toggleCursor() {
-  cursor = document.createElement("div");
-  cursor.className = "cursor";
-  document.body.appendChild(cursor);
-  isInit = true;
-  document.body.removeEventListener("mouseenter", toggleCursor);
-  document.body.removeEventListener("mousemove", toggleCursor);
-}
-
-document.addEventListener("mousemove", moveCursor);
-document.body.addEventListener("mouseenter", toggleCursor);
-document.body.addEventListener("mousemove", toggleCursor);
+document.body.addEventListener("pointermove", moveCursor);

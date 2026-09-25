@@ -322,7 +322,7 @@ class HorizontalCarousel extends Carousel {
   private moveImages(prev: HTMLElement, curr: HTMLElement, next: HTMLElement) {
     prev.style.left = "0";
     prev.style.right = "";
-    prev.style.transform = "translate(0%, -50%) scale(0.5)";
+    prev.style.transform = "translate(-50%, -50%) scale(0.5)";
 
     next.style.right = "0";
     next.style.left = "";
