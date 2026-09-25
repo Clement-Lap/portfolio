@@ -3,7 +3,8 @@
   "tasks": {
     "dev": "deno run -A npm:astro dev",
     "build": "deno run -A npm:astro build",
-    "test": "vitest"
+    "test": "vitest",
+    "preview": "deno run -A npm:astro preview"
   },
   "imports": {
     "@astrojs/sitemap": "npm:@astrojs/sitemap@^3.7.4",
