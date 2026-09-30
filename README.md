@@ -1,18 +1,11 @@
 # My portfolio 🎇
 
-Done with [Astro](https://astro.build/), and no framework. Design is based on a
-[figma](https://www.figma.com/) file I made, and illustrations (the "tree")
-created in
-[Affinity Photo 2](https://store.serif.com/en-us/update/windows/designer/2/). I
-used [`deno`](https://deno.com/) and [`pnpm`](https://pnpm.io/) for better
-dependency management, and developer experience. While not affecting the
-frontend's performances, I prefer to keep the same stack for the whole website
-(including backend).
+Done with [Astro](https://astro.build/), and no framework. Design is based on a [figma](https://www.figma.com/) file I made, and illustrations (the "tree") created in
+[Affinity](https://www.affinity.studio/). I used [`deno`](https://deno.com/) for better dependency management, and developer experience, though I am still figuring out if I should use Nub for additionnal NodeJS compatibility.
 
 # Deployment
 
-If you want to clone and deploy it locally for whatever reason, here is the
-process :
+If you want to clone and deploy it locally for whatever reason, here is the process :
 
 - Check if you have `deno` installed
 - Check if you have `git`
@@ -24,8 +17,8 @@ process :
 # - pnpm or npm
 git clone https://codeberg.org/clems-lap/portfolio.git # or git clone https://github.com/Clement-Lap/portfolio.git
 cd portfolio/
-deno install # or npm install
-pnpm task dev # or npm run dev
+deno install
+deno task dev 
 # open http://localhost:4321/ in your browser
 ```
 
