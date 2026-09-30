@@ -8,16 +8,24 @@ import "@styles/styles.pcss";
 
 interface Props {
 	title: string;
+	seoDescription: string;
 }
 
-const { title } = Astro.props;
+const { title, seoDescription } = Astro.props;
 ---
 
 <!doctype html>
 <head>
 	<meta lang="en" charset="utf-8" />
+	<meta name="author" content="Clément LAPORTE" />
+	<meta name="description" content={seoDescription} />
+	<meta name="og:title" content="Clément LAPORTE's portfolio" />
+	<meta name="og:image" content="/favicon.svg" />
+	<meta name="og:description" content={seoDescription} />
+
 	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 	<link rel="icon" href="/favicon.ico" />
+
 	<meta name="viewport" content="width=device-width" />
 	<meta name="generator" content={Astro.generator} />
 	<title>Clems portfolio - {title}</title>
