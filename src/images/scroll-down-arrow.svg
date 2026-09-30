@@ -6,23 +6,3 @@
 		stroke-width="4"
 		stroke-linecap="round"></path>
 </svg>
-<style>
-	#arrow {
-		width: 64px;
-		margin: auto;
-		animation-name: Bounce;
-		animation-duration: 1s;
-		animation-iteration-count: infinite;
-		animation-direction: alternate;
-		animation-timing-function: ease-in;
-	}
-
-	@keyframes Bounce {
-		from {
-			transform: translateY(0);
-		}
-		to {
-			transform: translateY(14px);
-		}
-	}
-</style>

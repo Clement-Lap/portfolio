@@ -15,7 +15,7 @@ import EvilCat from "@images/clem/evil-cat.png";
 import GloriousCat from "@images/clem/glorious-cat.png";
 ---
 
-<Layout title="home">
+<Layout title="home" seoDescription="My portfolio as a French developer and student, with all kind of passions.">
 	<section id="landing">
 		<div id="landing-text">
 			<div id="landing-text__name">
@@ -221,8 +221,13 @@ import GloriousCat from "@images/clem/glorious-cat.png";
 	#scroll-down > svg {
 		min-width: 3em;
 		min-height: 1em;
-		width: 10vw;
+		width: min(10vw, 100px);
 		height: 100%;
+		animation-name: Bounce;
+		animation-duration: 1s;
+		animation-iteration-count: infinite;
+		animation-direction: alternate;
+		animation-timing-function: ease-in;
 	}
 
 	#my-skills {
@@ -330,12 +335,17 @@ import GloriousCat from "@images/clem/glorious-cat.png";
 			margin-bottom: 30px;
 		}
 
-		#timeline__elements > svg {
-			//display: none;
-		}
-
 		section {
 			padding: 5vw !important;
+		}
+	}
+
+	@keyframes Bounce {
+		from {
+			transform: translateY(0);
+		}
+		to {
+			transform: translateY(14px);
 		}
 	}
 </style>
