@@ -1,9 +1,9 @@
-FROM denoland/deno:2.8.0 AS build
+FROM ghcr.io/nubjs/nub AS build
 WORKDIR /app
-COPY deno.lock deno.json ./
-RUN deno ci
+COPY package.json nub.lock ./
+RUN nub ci
 COPY . .
-RUN deno task build
+RUN nub run build
 
 FROM nginx:alpine
 COPY --from=build /app/dist /usr/share/nginx/html
