@@ -3,6 +3,9 @@ import { defineConfig, fontProviders } from "astro/config";
 import sitemap from "@astrojs/sitemap";
 import { getEnv } from "astro/env/runtime";
 
+const url = "https://www.clems.dev";
+
+
 // https://astro.build/config
 export default defineConfig({
 	i18n: {
@@ -13,7 +16,7 @@ export default defineConfig({
 			redirectToDefaultLocale: true,
 		},
 	},
-	site: getEnv("SITE_URL"),
+	site: url,
 	fonts: [
 		{
 			provider: fontProviders.fontsource(),
@@ -45,7 +48,7 @@ export default defineConfig({
 	integrations: [
 		sitemap({
 			i18n: { defaultLocale: "en", locales: ["fr", "en"] },
-			customPages: [`${getEnv("SITE_URL")}/robots.txt`],
+			customPages: [`${url}/robots.txt`],
 		}),
 	],
 });
