@@ -1,13 +1,8 @@
 <div id="cursor" data-cursor></div>
 
 <script src="/src/scripts/cursor.ts"></script>
-<style is:global is:inline>
-	body {
-		position: relative;
-	}
-
+<style>
 	#cursor {
-		positon: absolute;
 		z-index: 100;
 		background-color: #ffffff00;
 		backdrop-filter: invert(100%);
@@ -15,8 +10,9 @@
 		width: 70px;
 		aspect-ratio: 1;
 		border-radius: 100%;
-		transition: all 175ms ease-out;
-		transform: translate(-50%, -50%);
+		transition: all ease-out;
+
+		transform: scale(0);
 		border: 1px solid #00000044;
 		pointer-events: none;
 	}
