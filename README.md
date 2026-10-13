@@ -1,7 +1,7 @@
 # My portfolio 🎇
 
 Done with [Astro](https://astro.build/), and no framework. Design is based on a [figma](https://www.figma.com/) file I made, and illustrations (the "tree") created in
-[Affinity](https://www.affinity.studio/). I used [`deno`](https://deno.com/) for better dependency management, and developer experience, though I am still figuring out if I should use Nub for additionnal NodeJS compatibility.
+[Affinity](https://www.affinity.studio/). I used [`Nub`](https://deno.com/) instead of npm
 
 # Use this project
 
@@ -24,8 +24,9 @@ Then :
 ```
 npm i
 npm run dev 
-# open http://localhost:4321/ in your browser
 ```
+
+Open [localhost:4321](http://localhost:4321/) in your browser.
 
 ## Deployment 
 
