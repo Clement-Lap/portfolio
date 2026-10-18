@@ -36,7 +36,7 @@ const { data, rewindButtonText } = Astro.props;
 <style>
 	#carousel > #img-description {
 		font-size: 1.2em; /* the font looks smaller by default */
-		font-family: var(--font-akaya) !important;
+		font-family: var(--font-akaya);
 		font-weight: 400;
 		user-select: none;
 		height: fit-content;
@@ -51,6 +51,69 @@ const { data, rewindButtonText } = Astro.props;
 		flex-direction: column;
 		gap: 1em;
 		height: 100%;
+	}
+
+	#carousel > #carousel-wrapper.inform-user > * {
+		filter: grayscale(0.5) brightness(0.5) blur(2px);
+		transition: all 0.3s;
+	}
+
+	#carousel > #carousel-wrapper.inform-user::after {
+		--size: min(200px, 20vw);
+		content: "Swipe !";
+		display: flex;
+		width: var(--size);
+		height: calc(1.55282555 * var(--size));
+		position: absolute;
+		align-items: center;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		justify-content: center;
+		background-color: rgb(from var(--primary-clr) r g b / 70%);
+		border-radius: calc(2 * var(--border-radius));
+		text-align: center;
+		z-index: 1000;
+		font-size: 1.7em;
+		font-family: var(--font-lexend);
+		color: var(--background-clr);
+		transform-origin: 100% 100%;
+		animation: SwipeExample 3.5s ease-in-out infinite;
+	}
+
+	#carousel > #carousel-wrapper.inform-user:hover::after {
+		animation: none;
+		display: none;
+	}
+
+	#carousel > #carousel-wrapper.inform-user:hover > * {
+		filter: none;
+	}
+
+	@keyframes SwipeExample {
+		0% {
+			opacity: 0;
+		}
+		5% {
+			opacity: 1;
+		}
+		50% {
+			opacity: 1;
+		}
+
+		70% {
+			transform: translate(-50%, -50%) translate(100px, 50px) rotate(30deg);
+			opacity: 0.7;
+		}
+
+		99% {
+			transform: translate(-50%, -50%) translate(100px, 50px) rotate(30deg);
+			opacity: 0;
+		}
+
+		100% {
+			opacity: 0;
+		}
 	}
 
 	#carousel > #carousel-wrapper > img {

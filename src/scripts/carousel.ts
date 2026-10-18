@@ -2,7 +2,9 @@ type InteractionEvent = MouseEvent | TouchEvent;
 
 const CarouselSwapEvent = new Event("carouselswap");
 const carouselElement = document.querySelector("[data-carousel]")!;
+const carouselWrapperElement = document.querySelector("[data-carousel] > [data-carousel-wrapper]")!;
 const imagesQuerySelector = "[data-carousel-wrapper] > img";
+let isUserAware: boolean = false;
 
 function getImageElement(index: number): HTMLElement {
   return carouselElement.querySelector(
@@ -75,8 +77,8 @@ class SwipeCarousel extends Carousel {
       clientX = event.pageX;
       clientY = event.pageY;
     } else if (event instanceof TouchEvent) {
-      clientX = event.touches[0].pageX;
-      clientY = event.touches[0].pageY;
+      clientX = event.touches[0]!.pageX;
+      clientY = event.touches[0]!.pageY;
     }
 
     return [clientX, clientY];
@@ -175,7 +177,11 @@ class SwipeCarousel extends Carousel {
       `translate(-50%, -50%) translate3d(${newX}px, ${newY}px, 0)`;
   }
 
-  private swapImage() {
+	private swapImage() {
+		if (!isUserAware) {
+			isUserAware = true;
+			carouselWrapperElement.classList = "";
+		}
     this.isDragged = false;
 
     this.currentImageElement.removeEventListener(
@@ -355,7 +361,7 @@ class HorizontalCarousel extends Carousel {
 
   public override setup(): void {
     this.loop();
-    this.interval = setInterval(() => {
+		this.interval = setInterval(() => {
       this.loop();
     }, this.switchDelaySec * 1000);
   }
@@ -383,4 +389,8 @@ function displayCarousel() {
 }
 
 displayCarousel();
-window.addEventListener("resize", () => displayCarousel());
+setTimeout(() => {
+	if (!isUserAware) {
+		carouselWrapperElement.className = "inform-user";
+	}
+}, 7500);
