@@ -54,12 +54,17 @@ const newY = formatY(y);
 		} else {
 			element.className += " active";
 		}
+		timelineElements
+			.values()
+			.filter((el) => element != el)
+			.forEach((el) => {
+				el.classList.contains("active") ? (el.className = (el as HTMLElement).className.replace("active", "")) : null;
+			});
 	}
 
 	timelineElements.forEach((element) => {
 		element.addEventListener("pointerdown", () => {
 			toggleActive(element as HTMLElement);
-			console.log("tung ");
 		});
 	});
 </script>
@@ -94,16 +99,16 @@ const newY = formatY(y);
 			padding: 5px 10px;
 			width: 80%;
 			outline: 3px solid var(--primary-clr);
-			/*transition: all 0.2s ease-in-out;*/
 		}
 
 		.timeline-element.active > ul {
 			display: block;
+			transition: display 2s ease-in-out;
 		}
 
 		.timeline-element.active {
-			right: 0;
 			left: 0;
+			right: 0;
 			max-width: 100%;
 			width: 100%;
 			height: max-content;
