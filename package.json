@@ -2,25 +2,6 @@
 	"name": "portfolio",
 	"version": "0.0.1",
 	"type": "module",
-	"packageManager": "nub@0.9.6",
-	"devEngines": {
-		"packageManager": {
-			"name": "nub",
-			"version": "^0.9.6",
-			"onFail": "ignore"
-		}
-	},
-	"scripts": {
-		"dev": "nubx astro dev",
-		"build": "nubx astro build",
-		"test": "nubx vitest",
-		"preview": "nubx astro preview"
-	},
-	"devDependencies": {
-		"@nubjs/types": ">=0.4.13 <=0.9.6",
-		"@types/node": "^26.6.5",
-		"typescript": "^7.0.2"
-	},
 	"dependencies": {
 		"@astrojs/sitemap": "^3.7.4",
 		"@csstools/postcss-global-data": "^4.0.0",
@@ -34,5 +15,23 @@
 		"sharp": "^0.35.5",
 		"vite": "^8.3.4",
 		"vitest": "^5.0.3"
+	},
+	"devEngines": {
+		"packageManager": {
+			"name": "nub",
+			"version": "^0.9.7",
+			"onFail": "ignore"
+		}
+	},
+	"scripts": {
+		"dev": "nubx astro dev",
+		"build": "nubx astro build",
+		"test": "nubx vitest",
+		"preview": "nubx astro preview"
+	},
+	"devDependencies": {
+		"@nubjs/types": ">=0.4.13 <=0.9.6",
+		"@types/node": "^26.6.5",
+		"typescript": "^7.0.2"
 	}
 }
