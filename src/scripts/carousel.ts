@@ -57,8 +57,14 @@ class SwipeCarousel extends Carousel {
     this.currentImage = 5;
     this.defaultOffsetX = 0;
     this.defaultOffsetY = 0;
-    this.isDragged = false;
-  }
+		this.isDragged = false;
+
+		setTimeout(() => {
+			if (!isUserAware) {
+				carouselWrapperElement.className = "inform-user";
+			}
+		}, 7500);
+	}
 
   private setNextImage() {
     this.currentImage--;
@@ -389,8 +395,3 @@ function displayCarousel() {
 }
 
 displayCarousel();
-setTimeout(() => {
-	if (!isUserAware) {
-		carouselWrapperElement.className = "inform-user";
-	}
-}, 7500);
