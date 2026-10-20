@@ -47,7 +47,7 @@ export default defineConfig({
 
 	integrations: [
 		sitemap({
-			i18n: { defaultLocale: "en", locales: ["fr", "en"] },
+			i18n: { defaultLocale: "en", locales: { fr: "fr", en: "en" } },
 			customPages: [`${url}/robots.txt`],
 		}),
 	],
